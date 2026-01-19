@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture - UniAssist.ai</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #888;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        section {
+            padding: 50px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            color: #667eea;
+            margin-bottom: 25px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 25px 0 15px;
+        }
+
+        p {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .success {
+            color: #38ef7d;
+        }
+
+        .warning {
+            color: #f5576c;
+        }
+
+        /* Tech Stack Cards */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .tech-card {
+            background: #12122a;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #222;
+            transition: all 0.3s;
+        }
+
+        .tech-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .tech-card h4 {
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tech-card h4 span {
+            font-size: 1.5rem;
+        }
+
+        .tech-card .tech-name {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .tech-card .tech-desc {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .merit-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .merit-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #1a1a3e;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .merit-list li:last-child {
+            border-bottom: none;
+        }
+
+        .merit-list .icon {
+            color: #38ef7d;
+            font-size: 1.1rem;
+        }
+
+        /* Comparison Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: #1a1a3e;
+            color: #fff;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #222;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .winner {
+            background: rgba(56, 239, 125, 0.1);
+        }
+
+        /* Architecture Diagram */
+        .diagram-container {
+            background: #12122a;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diagram-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .diagram-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .diagram-controls button {
+            padding: 8px 16px;
+            border: 1px solid #333;
+            background: #0a0a1a;
+            color: #fff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .diagram-controls button:hover {
+            border-color: #667eea;
+        }
+
+        .diagram-controls button.active {
+            background: #667eea;
+            border-color: #667eea;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            background: #0a0a1a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        #diagram-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .node {
+            position: absolute;
+            background: linear-gradient(135deg, #1a1a3e, #2d2d5a);
+            border: 2px solid #333;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: move;
+            user-select: none;
+            min-width: 120px;
+            text-align: center;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            z-index: 10;
+        }
+
+        .node:hover {
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .node.selected {
+            border-color: #38ef7d;
+            box-shadow: 0 0 20px rgba(56, 239, 125, 0.3);
+        }
+
+        .node .node-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .node .node-title {
+            font-weight: 600;
+            color: #fff;
+            font-size: 0.9rem;
+        }
+
+        .node .node-tech {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 3px;
+        }
+
+        .node.frontend {
+            border-color: #667eea;
+        }
+
+        .node.backend {
+            border-color: #38ef7d;
+        }
+
+        .node.ai {
+            border-color: #f093fb;
+        }
+
+        .node.database {
+            border-color: #ffc107;
+        }
+
+        .node.external {
+            border-color: #f5576c;
+        }
+
+        svg.connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        svg.connections line {
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        svg.connections line.active {
+            stroke: #667eea;
+            stroke-width: 3;
+        }
+
+        .node-palette {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #0a0a1a;
+            border-radius: 8px;
+        }
+
+        .palette-item {
+            padding: 8px 15px;
+            background: #1a1a3e;
+            border: 1px dashed #333;
+            border-radius: 6px;
+            cursor: grab;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .palette-item:hover {
+            border-color: #667eea;
+        }
+
+        /* Comparison Section */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .comparison-card {
+            background: #12122a;
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid #222;
+        }
+
+        .comparison-card h4 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .comparison-card.winner-card {
+            border-color: #38ef7d;
+        }
+
+        .comparison-card.winner-card::before {
+            content: 'RECOMMENDED';
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: #38ef7d;
+            color: #000;
+            padding: 3px 12px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .comparison-card {
+            position: relative;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #1a1a3e;
+        }
+
+        .stat-row:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #888;
+        }
+
+        .stat-value {
+            font-weight: 600;
+        }
+
+        .cost-chart {
+            margin: 30px 0;
+        }
+
+        .cost-bar {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+
+        .cost-label {
+            width: 150px;
+            font-size: 0.9rem;
+        }
+
+        .cost-bar-container {
+            flex: 1;
+            height: 30px;
+            background: #1a1a3e;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+
+        .cost-bar-fill {
+            height: 100%;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .cost-bar-fill.low {
+            background: linear-gradient(90deg, #38ef7d, #11998e);
+        }
+
+        .cost-bar-fill.medium {
+            background: linear-gradient(90deg, #ffc107, #ff8c00);
+        }
+
+        .cost-bar-fill.high {
+            background: linear-gradient(90deg, #f5576c, #c82333);
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .canvas-wrapper {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>System Architecture</h1>
+        <p>Technical Infrastructure & Technology Stack for UniAssist.ai Rebuild</p>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-link">Back to Portal</a>
+
+        <!-- Tech Stack Section -->
+        <section>
+            <h2>Technology Stack</h2>
+            <p>Each technology was selected after careful evaluation of alternatives. Here's why each component was
+                chosen.</p>
+
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4><span>&#9881;</span> Frontend Framework</h4>
+                    <div class="tech-name">Next.js 14 (React)</div>
+                    <div class="tech-desc">Modern React framework with server-side rendering and app router</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> SEO-friendly - pages indexed by Google (unlike Streamlit)
+                        </li>
+                        <li><span class="icon">&#10003;</span> Instant page loads via Server-Side Rendering (SSR)</li>
+                        <li><span class="icon">&#10003;</span> Built-in routing and code splitting</li>
+                        <li><span class="icon">&#10003;</span> TypeScript support for type safety</li>
+                        <li><span class="icon">&#10003;</span> Large ecosystem and community support</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h4><span>&#9881;</span> Backend Framework</h4>
+                    <div class="tech-name">Node.js + Express</div>
+                    <div class="tech-desc">High-performance JavaScript runtime for API server</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> Non-blocking I/O for high concurrency</li>
+                        <li><span class="icon">&#10003;</span> Same language as frontend (code sharing)</li>
+                        <li><span class="icon">&#10003;</span> Handles 10,000+ concurrent connections</li>
+                        <li><span class="icon">&#10003;</span> Fast JSON processing</li>
+                        <li><span class="icon">&#10003;</span> Mature middleware ecosystem</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h4><span>&#128202;</span> Database</h4>
+                    <div class="tech-name">MongoDB Atlas</div>
+                    <div class="tech-desc">Document database for flexible data storage</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> Flexible schema for evolving requirements</li>
+                        <li><span class="icon">&#10003;</span> Built-in replication and sharding</li>
+                        <li><span class="icon">&#10003;</span> JSON-native (matches our API format)</li>
+                        <li><span class="icon">&#10003;</span> Free tier available (512MB)</li>
+                        <li><span class="icon">&#10003;</span> Easy scaling from 100 to 100k users</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h4><span>&#128269;</span> Vector Database</h4>
+                    <div class="tech-name">Qdrant</div>
+                    <div class="tech-desc">High-performance vector similarity search</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> 3-5x cheaper than Pinecone</li>
+                        <li><span class="icon">&#10003;</span> Sub-millisecond query response</li>
+                        <li><span class="icon">&#10003;</span> Hybrid search (vector + keyword)</li>
+                        <li><span class="icon">&#10003;</span> Advanced filtering by metadata</li>
+                        <li><span class="icon">&#10003;</span> Self-hosted option available</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h4><span>&#129302;</span> AI/LLM Gateway</h4>
+                    <div class="tech-name">OpenRouter</div>
+                    <div class="tech-desc">Unified API for 100+ AI models</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> Single API, multiple providers</li>
+                        <li><span class="icon">&#10003;</span> No vendor lock-in</li>
+                        <li><span class="icon">&#10003;</span> Automatic fallback if one provider fails</li>
+                        <li><span class="icon">&#10003;</span> Cost optimization by task routing</li>
+                        <li><span class="icon">&#10003;</span> GPT-4, Claude, Gemini, Llama available</li>
+                    </ul>
+                </div>
+
+                <div class="tech-card">
+                    <h4><span>&#128640;</span> AI Engine</h4>
+                    <div class="tech-name">Python FastAPI</div>
+                    <div class="tech-desc">Dedicated microservice for AI processing</div>
+                    <ul class="merit-list">
+                        <li><span class="icon">&#10003;</span> Access to PyTorch, Transformers</li>
+                        <li><span class="icon">&#10003;</span> Async support for high throughput</li>
+                        <li><span class="icon">&#10003;</span> Auto-generated API documentation</li>
+                        <li><span class="icon">&#10003;</span> Isolated from main app (independent scaling)</li>
+                        <li><span class="icon">&#10003;</span> Can run on GPU VPS when needed</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Embedding Comparison -->
+        <section>
+            <h2>Embedding Strategy: Self-Hosted vs Cloud API</h2>
+            <p>One of the most critical cost decisions is whether to run embedding models ourselves or use cloud APIs.
+            </p>
+
+            <div class="comparison-grid">
+                <div class="comparison-card winner-card">
+                    <h4 class="success">Self-Hosted Embedding (Recommended)</h4>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 15px;">Run sentence-transformers on
+                        dedicated VPS</p>
+                    <div class="stat-row">
+                        <span class="stat-label">Monthly Cost</span>
+                        <span class="stat-value success">&#8377;2,700 - 5,000 (Fixed)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Cost at 100k docs/month</span>
+                        <span class="stat-value success">&#8377;5,000 (same)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Cost at 1M docs/month</span>
+                        <span class="stat-value success">&#8377;5,000 (same)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Latency</span>
+                        <span class="stat-value">~50ms (fast)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Data Privacy</span>
+                        <span class="stat-value success">100% Private</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Rate Limits</span>
+                        <span class="stat-value success">None</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Setup Complexity</span>
+                        <span class="stat-value warning">Medium</span>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <h4>Cloud API (OpenRouter/OpenAI)</h4>
+                    <p style="color: #888; font-size: 0.9rem; margin-bottom: 15px;">Pay per token to cloud providers</p>
+                    <div class="stat-row">
+                        <span class="stat-label">Monthly Cost</span>
+                        <span class="stat-value">Variable (usage-based)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Cost at 100k docs/month</span>
+                        <span class="stat-value warning">&#8377;80,000+</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Cost at 1M docs/month</span>
+                        <span class="stat-value warning">&#8377;8,00,000+</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Latency</span>
+                        <span class="stat-value">~200-500ms</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Data Privacy</span>
+                        <span class="stat-value warning">Sent to 3rd party</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Rate Limits</span>
+                        <span class="stat-value warning">Yes (throttling)</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Setup Complexity</span>
+                        <span class="stat-value success">Low</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Cost Scaling Comparison</h3>
+            <div class="cost-chart">
+                <div class="cost-bar">
+                    <span class="cost-label">10k docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill low" style="width: 15%;">&#8377;4k</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Self-Hosted</span>
+                </div>
+                <div class="cost-bar">
+                    <span class="cost-label">10k docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill medium" style="width: 20%;">&#8377;8k</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Cloud API</span>
+                </div>
+                <div class="cost-bar">
+                    <span class="cost-label">100k docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill low" style="width: 15%;">&#8377;5k</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Self-Hosted</span>
+                </div>
+                <div class="cost-bar">
+                    <span class="cost-label">100k docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill high" style="width: 60%;">&#8377;80k</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Cloud API</span>
+                </div>
+                <div class="cost-bar">
+                    <span class="cost-label">1M docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill low" style="width: 15%;">&#8377;5k</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Self-Hosted</span>
+                </div>
+                <div class="cost-bar">
+                    <span class="cost-label">1M docs/month</span>
+                    <div class="cost-bar-container">
+                        <div class="cost-bar-fill high" style="width: 100%;">&#8377;8L+</div>
+                    </div>
+                    <span style="font-size: 0.85rem;">Cloud API</span>
+                </div>
+            </div>
+
+            <div class="tech-card" style="margin-top: 30px; border-color: #38ef7d;">
+                <h4 style="color: #38ef7d;">Verdict: Self-Hosted is the Clear Winner</h4>
+                <p>With student documents (resumes, transcripts, essays) being processed regularly, the volume will only
+                    grow. Self-hosted gives:</p>
+                <ul class="merit-list">
+                    <li><span class="icon">&#10003;</span> <strong>Predictable budgeting</strong> - Fixed cost
+                        regardless of growth</li>
+                    <li><span class="icon">&#10003;</span> <strong>Complete privacy</strong> - Student data never leaves
+                        our servers</li>
+                    <li><span class="icon">&#10003;</span> <strong>No rate limits</strong> - Process as many documents
+                        as needed</li>
+                    <li><span class="icon">&#10003;</span> <strong>Lower latency</strong> - 4x faster than API calls
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Vector DB Comparison -->
+        <section>
+            <h2>Vector Database Comparison</h2>
+
+            <table>
+                <tr>
+                    <th>Feature</th>
+                    <th>Qdrant (Selected)</th>
+                    <th>Pinecone</th>
+                    <th>pgvector</th>
+                    <th>Weaviate</th>
+                </tr>
+                <tr class="winner">
+                    <td><strong>Monthly Cost (1M vectors)</strong></td>
+                    <td class="success"><strong>&#8377;1,800 - 13,600</strong></td>
+                    <td>&#8377;5,400 - 45,000</td>
+                    <td>&#8377;2,000 - 10,000</td>
+                    <td>&#8377;4,500 - 27,000</td>
+                </tr>
+                <tr>
+                    <td>Hybrid Search (Vector + Keyword)</td>
+                    <td class="success">Yes (Built-in)</td>
+                    <td class="warning">Limited</td>
+                    <td class="warning">Manual Setup</td>
+                    <td class="success">Yes</td>
+                </tr>
+                <tr>
+                    <td>Filtering by Metadata</td>
+                    <td class="success">Advanced</td>
+                    <td class="success">Good</td>
+                    <td>Basic</td>
+                    <td class="success">Good</td>
+                </tr>
+                <tr>
+                    <td>Self-Hosted Option</td>
+                    <td class="success">Yes (Free)</td>
+                    <td class="warning">No</td>
+                    <td class="success">Yes</td>
+                    <td class="success">Yes</td>
+                </tr>
+                <tr>
+                    <td>Query Latency</td>
+                    <td class="success">&lt;10ms</td>
+                    <td>&lt;50ms</td>
+                    <td>~100ms</td>
+                    <td>&lt;20ms</td>
+                </tr>
+                <tr>
+                    <td>Multi-Tenancy</td>
+                    <td class="success">Built-in</td>
+                    <td>Namespaces</td>
+                    <td>Manual</td>
+                    <td>Built-in</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- Interactive Architecture Diagram -->
+        <section>
+            <h2>Interactive Architecture Diagram</h2>
+            <p>Drag nodes to customize the layout. Click nodes to see connections.</p>
+
+            <div class="diagram-container">
+                <div class="diagram-header">
+                    <h3 style="margin: 0;">System Architecture</h3>
+                    <div class="diagram-controls">
+                        <button onclick="resetDiagram()">Reset Layout</button>
+                        <button onclick="saveDiagram()">Save Layout</button>
+                        <button onclick="toggleConnections()" id="conn-btn">Show Connections</button>
+                    </div>
+                </div>
+
+                <div class="canvas-wrapper" id="canvas">
+                    <svg class="connections" id="connections-svg"></svg>
+
+                    <!-- Nodes will be dynamically positioned -->
+                    <div class="node frontend" id="node-user" style="left: 50px; top: 50px;">
+                        <div class="node-icon">&#128100;</div>
+                        <div class="node-title">User</div>
+                        <div class="node-tech">Browser/Mobile</div>
+                    </div>
+
+                    <div class="node frontend" id="node-nextjs" style="left: 200px; top: 50px;">
+                        <div class="node-icon">&#9881;</div>
+                        <div class="node-title">Next.js Frontend</div>
+                        <div class="node-tech">React + TypeScript</div>
+                    </div>
+
+                    <div class="node backend" id="node-api" style="left: 400px; top: 50px;">
+                        <div class="node-icon">&#128640;</div>
+                        <div class="node-title">API Gateway</div>
+                        <div class="node-tech">Node.js + Express</div>
+                    </div>
+
+                    <div class="node backend" id="node-auth" style="left: 400px; top: 180px;">
+                        <div class="node-icon">&#128274;</div>
+                        <div class="node-title">Auth Service</div>
+                        <div class="node-tech">JWT + OAuth</div>
+                    </div>
+
+                    <div class="node ai" id="node-aiengine" style="left: 600px; top: 50px;">
+                        <div class="node-icon">&#129302;</div>
+                        <div class="node-title">AI Engine</div>
+                        <div class="node-tech">Python FastAPI</div>
+                    </div>
+
+                    <div class="node ai" id="node-embeddings" style="left: 600px; top: 180px;">
+                        <div class="node-icon">&#128200;</div>
+                        <div class="node-title">Embeddings</div>
+                        <div class="node-tech">Sentence-Transformers</div>
+                    </div>
+
+                    <div class="node database" id="node-mongodb" style="left: 200px; top: 300px;">
+                        <div class="node-icon">&#128202;</div>
+                        <div class="node-title">MongoDB</div>
+                        <div class="node-tech">User Data</div>
+                    </div>
+
+                    <div class="node database" id="node-qdrant" style="left: 400px; top: 300px;">
+                        <div class="node-icon">&#128269;</div>
+                        <div class="node-title">Qdrant</div>
+                        <div class="node-tech">Vector Search</div>
+                    </div>
+
+                    <div class="node external" id="node-openrouter" style="left: 600px; top: 300px;">
+                        <div class="node-icon">&#127760;</div>
+                        <div class="node-title">OpenRouter</div>
+                        <div class="node-tech">LLM Gateway</div>
+                    </div>
+
+                    <div class="node external" id="node-cloudinary" style="left: 50px; top: 180px;">
+                        <div class="node-icon">&#128247;</div>
+                        <div class="node-title">Cloudinary</div>
+                        <div class="node-tech">Media Storage</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap; font-size: 0.85rem;">
+                    <span><span style="color: #667eea;">&#9632;</span> Frontend</span>
+                    <span><span style="color: #38ef7d;">&#9632;</span> Backend</span>
+                    <span><span style="color: #f093fb;">&#9632;</span> AI Layer</span>
+                    <span><span style="color: #ffc107;">&#9632;</span> Database</span>
+                    <span><span style="color: #f5576c;">&#9632;</span> External Service</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Data Flow -->
+        <section>
+            <h2>Data Flow Architecture</h2>
+
+            <div class="tech-card">
+                <h4>Request Flow: User Query to AI Response</h4>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 15px;">
+                    <span style="background: #667eea; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">1.
+                        User Query</span>
+                    <span style="color: #667eea;">&#8594;</span>
+                    <span
+                        style="background: #38ef7d; color: #000; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">2.
+                        API Gateway</span>
+                    <span style="color: #38ef7d;">&#8594;</span>
+                    <span
+                        style="background: #ffc107; color: #000; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">3.
+                        Context Fetch (MongoDB)</span>
+                    <span style="color: #ffc107;">&#8594;</span>
+                    <span style="background: #f093fb; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">4.
+                        Embed Query</span>
+                    <span style="color: #f093fb;">&#8594;</span>
+                    <span
+                        style="background: #ffc107; color: #000; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">5.
+                        Vector Search (Qdrant)</span>
+                    <span style="color: #ffc107;">&#8594;</span>
+                    <span style="background: #f5576c; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">6.
+                        LLM Call (OpenRouter)</span>
+                    <span style="color: #f5576c;">&#8594;</span>
+                    <span style="background: #667eea; padding: 8px 15px; border-radius: 20px; font-size: 0.85rem;">7.
+                        Stream Response</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>UniAssist.ai System Architecture</p>
+            <p style="margin-top: 5px;">Last Updated: <span id="last-updated"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('last-updated').textContent = new Date().toLocaleDateString();
+
+        // Draggable nodes
+        let activeNode = null;
+        let offsetX, offsetY;
+        let showConnections = false;
+
+        const connections = [
+            ['node-user', 'node-nextjs'],
+            ['node-nextjs', 'node-api'],
+            ['node-nextjs', 'node-cloudinary'],
+            ['node-api', 'node-auth'],
+            ['node-api', 'node-aiengine'],
+            ['node-api', 'node-mongodb'],
+            ['node-aiengine', 'node-embeddings'],
+            ['node-aiengine', 'node-qdrant'],
+            ['node-aiengine', 'node-openrouter'],
+            ['node-embeddings', 'node-qdrant']
+        ];
+
+        document.querySelectorAll('.node').forEach(node => {
+            node.addEventListener('mousedown', startDrag);
+            node.addEventListener('touchstart', startDrag, { passive: false });
+        });
+
+        function startDrag(e) {
+            e.preventDefault();
+            activeNode = e.currentTarget;
+            activeNode.classList.add('selected');
+
+            const rect = activeNode.getBoundingClientRect();
+            const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+
+            if (e.type === 'touchstart') {
+                offsetX = e.touches[0].clientX - rect.left;
+                offsetY = e.touches[0].clientY - rect.top;
+            } else {
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+            }
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+        }
+
+        function drag(e) {
+            if (!activeNode) return;
+            e.preventDefault();
+
+            const canvas = document.getElementById('canvas');
+            const canvasRect = canvas.getBoundingClientRect();
+
+            let clientX, clientY;
+            if (e.type === 'touchmove') {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            let newX = clientX - canvasRect.left - offsetX;
+            let newY = clientY - canvasRect.top - offsetY;
+
+            // Bounds
+            newX = Math.max(0, Math.min(newX, canvasRect.width - activeNode.offsetWidth));
+            newY = Math.max(0, Math.min(newY, canvasRect.height - activeNode.offsetHeight));
+
+            activeNode.style.left = newX + 'px';
+            activeNode.style.top = newY + 'px';
+
+            if (showConnections) drawConnections();
+        }
+
+        function stopDrag() {
+            if (activeNode) {
+                activeNode.classList.remove('selected');
+                activeNode = null;
+            }
+            document.removeEventListener('mousemove', drag);
+            document.removeEventListener('mouseup', stopDrag);
+            document.removeEventListener('touchmove', drag);
+            document.removeEventListener('touchend', stopDrag);
+        }
+
+        function drawConnections() {
+            const svg = document.getElementById('connections-svg');
+            const canvas = document.getElementById('canvas');
+            svg.innerHTML = '';
+
+            connections.forEach(([from, to]) => {
+                const fromNode = document.getElementById(from);
+                const toNode = document.getElementById(to);
+
+                if (fromNode && toNode) {
+                    const fromRect = fromNode.getBoundingClientRect();
+                    const toRect = toNode.getBoundingClientRect();
+                    const canvasRect = canvas.getBoundingClientRect();
+
+                    const x1 = fromRect.left - canvasRect.left + fromRect.width / 2;
+                    const y1 = fromRect.top - canvasRect.top + fromRect.height / 2;
+                    const x2 = toRect.left - canvasRect.left + toRect.width / 2;
+                    const y2 = toRect.top - canvasRect.top + toRect.height / 2;
+
+                    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    line.setAttribute('x1', x1);
+                    line.setAttribute('y1', y1);
+                    line.setAttribute('x2', x2);
+                    line.setAttribute('y2', y2);
+                    svg.appendChild(line);
+                }
+            });
+        }
+
+        function toggleConnections() {
+            showConnections = !showConnections;
+            const btn = document.getElementById('conn-btn');
+            if (showConnections) {
+                btn.textContent = 'Hide Connections';
+                btn.classList.add('active');
+                drawConnections();
+            } else {
+                btn.textContent = 'Show Connections';
+                btn.classList.remove('active');
+                document.getElementById('connections-svg').innerHTML = '';
+            }
+        }
+
+        function resetDiagram() {
+            const positions = {
+                'node-user': { left: 50, top: 50 },
+                'node-nextjs': { left: 200, top: 50 },
+                'node-api': { left: 400, top: 50 },
+                'node-auth': { left: 400, top: 180 },
+                'node-aiengine': { left: 600, top: 50 },
+                'node-embeddings': { left: 600, top: 180 },
+                'node-mongodb': { left: 200, top: 300 },
+                'node-qdrant': { left: 400, top: 300 },
+                'node-openrouter': { left: 600, top: 300 },
+                'node-cloudinary': { left: 50, top: 180 }
+            };
+
+            Object.entries(positions).forEach(([id, pos]) => {
+                const node = document.getElementById(id);
+                if (node) {
+                    node.style.left = pos.left + 'px';
+                    node.style.top = pos.top + 'px';
+                }
+            });
+
+            localStorage.removeItem('diagram_layout');
+            if (showConnections) drawConnections();
+        }
+
+        function saveDiagram() {
+            const layout = {};
+            document.querySelectorAll('.node').forEach(node => {
+                layout[node.id] = {
+                    left: parseInt(node.style.left),
+                    top: parseInt(node.style.top)
+                };
+            });
+            localStorage.setItem('diagram_layout', JSON.stringify(layout));
+            alert('Layout saved!');
+        }
+
+        // Load saved layout
+        function loadDiagram() {
+            const saved = localStorage.getItem('diagram_layout');
+            if (saved) {
+                const layout = JSON.parse(saved);
+                Object.entries(layout).forEach(([id, pos]) => {
+                    const node = document.getElementById(id);
+                    if (node) {
+                        node.style.left = pos.left + 'px';
+                        node.style.top = pos.top + 'px';
+                    }
+                });
+            }
+        }
+
+        loadDiagram();
+    </script>
+</body>
+
+</html>
