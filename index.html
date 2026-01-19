@@ -17,6 +17,126 @@
             background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
             color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            animation: float 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        .bg-animation span:nth-child(1) {
+            left: 10%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+
+        .bg-animation span:nth-child(2) {
+            left: 20%;
+            width: 40px;
+            height: 40px;
+            animation-delay: 2s;
+            animation-duration: 25s;
+        }
+
+        .bg-animation span:nth-child(3) {
+            left: 35%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 4s;
+            animation-duration: 22s;
+        }
+
+        .bg-animation span:nth-child(4) {
+            left: 50%;
+            width: 30px;
+            height: 30px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+
+        .bg-animation span:nth-child(5) {
+            left: 65%;
+            width: 50px;
+            height: 50px;
+            animation-delay: 3s;
+            animation-duration: 28s;
+        }
+
+        .bg-animation span:nth-child(6) {
+            left: 75%;
+            width: 70px;
+            height: 70px;
+            animation-delay: 5s;
+            animation-duration: 24s;
+        }
+
+        .bg-animation span:nth-child(7) {
+            left: 85%;
+            width: 25px;
+            height: 25px;
+            animation-delay: 7s;
+            animation-duration: 20s;
+        }
+
+        .bg-animation span:nth-child(8) {
+            left: 5%;
+            width: 45px;
+            height: 45px;
+            animation-delay: 8s;
+            animation-duration: 30s;
+        }
+
+        .bg-animation span:nth-child(9) {
+            left: 45%;
+            width: 35px;
+            height: 35px;
+            animation-delay: 1s;
+            animation-duration: 26s;
+        }
+
+        .bg-animation span:nth-child(10) {
+            left: 90%;
+            width: 55px;
+            height: 55px;
+            animation-delay: 6s;
+            animation-duration: 23s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(-1500px) rotate(720deg);
+                opacity: 0;
+            }
         }
 
         .container {
@@ -24,20 +144,52 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
+            position: relative;
+            z-index: 1;
         }
 
+        /* Animated Header */
         header {
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-size: clamp(2.5rem, 6vw, 4rem);
             margin-bottom: 15px;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+            background-size: 200% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         header p {
@@ -45,108 +197,252 @@
             color: #a0a0c0;
             max-width: 700px;
             margin: 0 auto;
+            animation: fadeIn 1s ease-out 0.3s both;
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Animated Cards Grid */
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             padding: 20px 0;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
             text-decoration: none;
             color: inherit;
             display: block;
+            position: relative;
+            overflow: hidden;
+            animation: cardFadeIn 0.8s ease-out both;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
             border-color: rgba(102, 126, 234, 0.5);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.25), 0 0 30px rgba(102, 126, 234, 0.1) inset;
         }
 
         .card-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 16px;
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
-            margin-bottom: 20px;
+            font-size: 36px;
+            margin-bottom: 25px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .card-icon.strategy {
             background: linear-gradient(135deg, #667eea, #764ba2);
-        }
-
-        .card-icon.timeline {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-        }
-
-        .card-icon.requirements {
-            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
 
         .card-icon.architecture {
             background: linear-gradient(135deg, #4facfe, #00f2fe);
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .card-icon.timeline {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            box-shadow: 0 10px 30px rgba(56, 239, 125, 0.3);
+        }
+
+        .card-icon.requirements {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
         }
 
         .card h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+
+        .card:hover h2 {
+            color: #667eea;
         }
 
         .card p {
             color: #a0a0c0;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .card-tag {
             display: inline-block;
-            padding: 5px 12px;
-            background: rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             font-size: 0.8rem;
             margin-top: 20px;
+            transition: all 0.3s;
         }
 
+        .card:hover .card-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        /* Pulse animation for icons */
+        .card-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: inherit;
+            z-index: -1;
+            animation: pulse 2s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        .card:hover .card-icon::after {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             color: #666;
             font-size: 0.9rem;
+            animation: fadeIn 1s ease-out 1s both;
         }
 
         footer a {
             color: #667eea;
             text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #764ba2;
         }
 
         .internal-link {
             margin-top: 40px;
             text-align: center;
+            animation: fadeIn 1s ease-out 1.2s both;
         }
 
         .internal-link a {
-            color: #666;
+            color: #555;
             font-size: 0.85rem;
             text-decoration: none;
-            border-bottom: 1px dashed #666;
+            border-bottom: 1px dashed #555;
+            transition: all 0.3s;
         }
 
         .internal-link a:hover {
             color: #a0a0c0;
+            border-color: #a0a0c0;
         }
 
+        /* Glow effect on scroll */
+        .glow-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, #667eea, transparent);
+            background-size: 200% 100%;
+            animation: glowMove 3s linear infinite;
+            z-index: 100;
+        }
+
+        @keyframes glowMove {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Responsive */
         @media (max-width: 600px) {
             .container {
                 padding: 20px 15px;
@@ -157,13 +453,112 @@
             }
 
             header {
-                padding: 40px 15px;
+                padding: 50px 15px;
+            }
+
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f0c29;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse-text 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-text {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
+        }
+
+        .loader-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            margin: 20px auto 0;
+            overflow: hidden;
+        }
+
+        .loader-progress {
+            width: 30%;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            animation: loading 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(400%);
             }
         }
     </style>
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-logo">UniAssist.ai</div>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Glow Line -->
+    <div class="glow-line"></div>
+
     <div class="container">
         <header>
             <h1>UniAssist.ai</h1>
@@ -174,32 +569,32 @@
             <a href="product_strategy.html" class="card">
                 <div class="card-icon strategy">&#128202;</div>
                 <h2>Product Strategy & Technical Assessment</h2>
-                <p>Comprehensive analysis of current system limitations and proposed enterprise-grade architecture.
-                    Includes technology comparisons and feature transformation plans.</p>
+                <p>Comprehensive analysis of current system limitations and proposed enterprise-grade architecture with
+                    technology comparisons.</p>
                 <span class="card-tag">Strategic Document</span>
             </a>
 
             <a href="architecture.html" class="card">
                 <div class="card-icon architecture">&#9881;</div>
                 <h2>System Architecture</h2>
-                <p>Detailed tech stack with merits, embedding model comparison (self-hosted vs cloud), vector database
-                    analysis, and interactive architecture diagram.</p>
+                <p>Detailed tech stack with merits, embedding model comparison, vector database analysis, and
+                    interactive architecture diagram.</p>
                 <span class="card-tag">Technical Deep-Dive</span>
             </a>
 
             <a href="project_timeline.html" class="card">
                 <div class="card-icon timeline">&#128197;</div>
                 <h2>Project Timeline & Status</h2>
-                <p>Live project tracker with milestones, current status updates, and development progress. Add comments
-                    and track deliverables in real-time.</p>
+                <p>Live project tracker with milestones, current status updates, and development progress. Track
+                    deliverables in real-time.</p>
                 <span class="card-tag">Interactive Tracker</span>
             </a>
 
             <a href="client_requirements.html" class="card">
                 <div class="card-icon requirements">&#128221;</div>
                 <h2>Client Requirements Form</h2>
-                <p>Capture your design preferences, priority features, brand guidelines, and specific requirements. Your
-                    input shapes the final product.</p>
+                <p>Capture your design preferences, priority features, brand guidelines, and specific requirements for
+                    the final product.</p>
                 <span class="card-tag">Input Form</span>
             </a>
         </div>
@@ -213,6 +608,36 @@
             <a href="meeting_help_guide.html">Internal: Meeting Help Guide</a>
         </div>
     </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.getElementById('loader').classList.add('hidden');
+            }, 800);
+        });
+
+        // Add parallax effect to cards on mouse move
+        document.addEventListener('mousemove', function (e) {
+            const cards = document.querySelectorAll('.card');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+
+            cards.forEach((card, index) => {
+                const depth = (index + 1) * 0.5;
+                const moveX = (x - 0.5) * depth * 10;
+                const moveY = (y - 0.5) * depth * 10;
+                card.style.transform = `translateY(${card.matches(':hover') ? '-15px' : '0'}) perspective(1000px) rotateY(${moveX * 0.5}deg) rotateX(${-moveY * 0.5}deg)`;
+            });
+        });
+
+        // Reset card transform when mouse leaves container
+        document.querySelector('.container').addEventListener('mouseleave', function () {
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.transform = '';
+            });
+        });
+    </script>
 </body>
 
 </html>
