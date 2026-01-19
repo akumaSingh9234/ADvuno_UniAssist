@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UniAssist.ai - Client Meeting Guide</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        h1 {
+            color: #1a1a2e;
+            border-bottom: 3px solid #4361ee;
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #1a1a2e;
+            background: #f0f4ff;
+            padding: 10px 15px;
+            border-left: 4px solid #4361ee;
+            margin-top: 35px;
+        }
+
+        h3 {
+            color: #4361ee;
+            margin-top: 25px;
+        }
+
+        h4 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background: #4361ee;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .header-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-item label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .meta-input {
+            padding: 8px 12px;
+            border: 2px solid #4361ee;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .time-badge {
+            background: #e8f4e8;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .tip {
+            background: #fff8e6;
+            padding: 12px 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+
+        .tip strong {
+            color: #856404;
+        }
+
+        .benefit {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        ul {
+            margin: 8px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        /* Working Checklist Styles */
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #4361ee;
+        }
+
+        .checklist label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checklist input:checked+label {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .image-box {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .image-box img {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .image-box h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .drawbacks {
+            background: #fff5f5;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+
+        .drawbacks li {
+            color: #c00;
+        }
+
+        .notes-section {
+            background: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .notes-section h2 {
+            margin-top: 0;
+            background: none;
+            padding: 0;
+            border: none;
+        }
+
+        .note-field {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 2px solid #4361ee;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            margin-bottom: 15px;
+            resize: vertical;
+        }
+
+        .note-label {
+            font-weight: bold;
+            color: #1a1a2e;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn-group {
+            margin-top: 15px;
+        }
+
+        .save-btn {
+            background: #4361ee;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .save-btn:hover {
+            background: #3451de;
+        }
+
+        .clear-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .clear-btn:hover {
+            background: #c82333;
+        }
+
+        .export-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .export-btn:hover {
+            background: #218838;
+        }
+
+        .save-status {
+            color: #28a745;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px solid #eee;
+            margin: 30px 0;
+        }
+
+        .say-box {
+            background: #e8f5e9;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .say-box strong {
+            color: #2e7d32;
+        }
+
+        .ask-box {
+            background: #e3f2fd;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .ask-box strong {
+            color: #1565c0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4361ee;
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .progress-text {
+            font-size: 13px;
+            color: #666;
+            text-align: right;
+        }
+
+        @media print {
+            body {
+                padding: 15px;
+                font-size: 12px;
+            }
+
+            .notes-section {
+                break-inside: avoid;
+            }
+
+            .btn-group {
+                display: none;
+            }
+
+            .meta-input {
+                border: 1px solid #999;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>UniAssist.ai - Client Meeting Guide</h1>
+
+    <div class="header-meta">
+        <div class="meta-item">
+            <label>Date:</label>
+            <input type="date" class="meta-input" id="meeting-date">
+        </div>
+        <div class="meta-item">
+            <label>Time:</label>
+            <input type="time" class="meta-input" id="meeting-time">
+        </div>
+        <div class="meta-item">
+            <label>Duration:</label>
+            <select class="meta-input" id="meeting-duration">
+                <option value="60">60 minutes</option>
+                <option value="90" selected>90 minutes</option>
+                <option value="120">120 minutes</option>
+            </select>
+        </div>
+        <div class="meta-item">
+            <label>Your Role:</label>
+            <span style="font-weight: bold; color: #4361ee;">Technical Support</span>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="checklist-progress" style="width: 0%"></div>
+    </div>
+    <div class="progress-text"><span id="checklist-count">0</span> of <span id="checklist-total">0</span> items
+        completed</div>
+
+    <h2>Pre-Meeting Checklist</h2>
+    <ul class="checklist" id="pre-meeting-checklist">
+        <li><input type="checkbox" id="pre1"><label for="pre1">UniAssist.ai website open in browser
+                (app.uniassist.ai)</label></li>
+        <li><input type="checkbox" id="pre2"><label for="pre2">This meeting guide open for reference</label></li>
+        <li><input type="checkbox" id="pre3"><label for="pre3">Architecture diagrams ready to show</label></li>
+        <li><input type="checkbox" id="pre4"><label for="pre4">Synced with lead developer on who covers which
+                section</label></li>
+        <li><input type="checkbox" id="pre5"><label for="pre5">Screen sharing tested and working</label></li>
+        <li><input type="checkbox" id="pre6"><label for="pre6">Joined call 5 minutes early</label></li>
+        <li><input type="checkbox" id="pre7"><label for="pre7">Water nearby, notifications muted</label></li>
+    </ul>
+
+    <hr>
+
+    <h2>Meeting Flow</h2>
+
+    <h3>Section 1: Opening <span class="time-badge">5 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s1-1"><label for="s1-1">Introduce team members and roles</label></li>
+        <li><input type="checkbox" id="s1-2"><label for="s1-2">State the purpose of the meeting</label></li>
+        <li><input type="checkbox" id="s1-3"><label for="s1-3">Outline the agenda briefly</label></li>
+    </ul>
+
+    <div class="say-box">
+        <strong>Say:</strong> "Thank you for taking the time today. We have completed a thorough analysis of your
+        current application and have prepared a comprehensive proposal for the rebuild. We will first walk through what
+        we found in the current system, then present our recommended solution, and finally discuss timeline and next
+        steps."
+    </div>
+
+    <hr>
+
+    <h3>Section 2: Current Application Problems <span class="time-badge">15-20 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s2-1"><label for="s2-1">Open their website via screen share</label></li>
+        <li><input type="checkbox" id="s2-2"><label for="s2-2">Walk through performance issues</label></li>
+        <li><input type="checkbox" id="s2-3"><label for="s2-3">Explain architecture limitations</label></li>
+        <li><input type="checkbox" id="s2-4"><label for="s2-4">Show UX/UI problems</label></li>
+        <li><input type="checkbox" id="s2-5"><label for="s2-5">Mention security concerns diplomatically</label></li>
+    </ul>
+
+    <table>
+        <tr>
+            <th style="width:20%">Issue</th>
+            <th style="width:40%">What to Point Out</th>
+            <th style="width:40%">Business Impact</th>
+        </tr>
+        <tr>
+            <td><strong>Performance</strong></td>
+            <td>Slow page loads (3-5 seconds), laggy authentication, user state lost when page refreshes</td>
+            <td>Users abandon site, poor first impression, frustration with forms</td>
+        </tr>
+        <tr>
+            <td><strong>Architecture</strong></td>
+            <td>Streamlit creates 12 separate Python processes, no data sharing between modules</td>
+            <td>High server costs, difficult maintenance, inconsistent user experience</td>
+        </tr>
+        <tr>
+            <td><strong>User Experience</strong></td>
+            <td>Inconsistent styling, poor mobile layout, forms lose data on navigation, excessive emojis</td>
+            <td>Users abandon complex tasks, 40% lower completion rates</td>
+        </tr>
+        <tr>
+            <td><strong>Security</strong></td>
+            <td>Authentication token visible in browser URL, weak session management</td>
+            <td>Potential data exposure, trust issues with security-conscious users</td>
+        </tr>
+        <tr>
+            <td><strong>Scalability</strong></td>
+            <td>Each user = one Python process, cannot handle more than ~50 concurrent users efficiently</td>
+            <td>System will crash or slow down significantly during peak usage</td>
+        </tr>
+    </table>
+
+    <div class="tip">
+        <strong>Important:</strong> Be diplomatic. Never say "this is broken" or "this is bad." Instead say:
+        <ul>
+            <li>"There is significant opportunity to improve here..."</li>
+            <li>"The current approach works but has limitations at scale..."</li>
+            <li>"Users currently experience some friction that we can eliminate..."</li>
+        </ul>
+    </div>
+
+    <hr>
+
+    <h3>Section 3: Proposed Solution <span class="time-badge">20-25 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s3-1"><label for="s3-1">Explain Modular Monolith architecture</label></li>
+        <li><input type="checkbox" id="s3-2"><label for="s3-2">Cover embedding strategy (self-hosted)</label></li>
+        <li><input type="checkbox" id="s3-3"><label for="s3-3">Explain Qdrant vector database choice</label></li>
+        <li><input type="checkbox" id="s3-4"><label for="s3-4">Present OpenRouter multi-model approach</label></li>
+        <li><input type="checkbox" id="s3-5"><label for="s3-5">Discuss live data integration</label></li>
+        <li><input type="checkbox" id="s3-6"><label for="s3-6">Mention custom AI agents per module</label></li>
+    </ul>
+
+    <h4>A. Architecture: Modular Monolith</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "Instead of 12 separate applications, we build one unified system with clear internal
+        modules. Think of it like a well-organized office building versus 12 separate buildings across the city."
+    </div>
+    <table>
+        <tr>
+            <th>What It Means</th>
+            <th>Benefit for You</th>
+        </tr>
+        <tr>
+            <td>Single codebase with clear module boundaries</td>
+            <td>Easier to develop, test, and debug</td>
+        </tr>
+        <tr>
+            <td>One deployment instead of 12 separate apps</td>
+            <td class="benefit">60-70% lower hosting costs</td>
+        </tr>
+        <tr>
+            <td>Shared authentication and user data</td>
+            <td>User fills profile once, available everywhere</td>
+        </tr>
+        <tr>
+            <td>Right-sized for a 3-person team</td>
+            <td>Faster development, less complexity</td>
+        </tr>
+        <tr>
+            <td>Can be split into microservices later</td>
+            <td>Future-proof as you grow</td>
+        </tr>
+    </table>
+
+    <h4>B. Embeddings: Self-Hosted Model</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "For converting documents into searchable format, we recommend hosting our own model.
+        This gives predictable costs regardless of how many documents students upload."
+    </div>
+    <table>
+        <tr>
+            <th>Option</th>
+            <th>Monthly Cost</th>
+            <th>Pros/Cons</th>
+        </tr>
+        <tr>
+            <td><strong>Self-Hosted</strong> (Recommended)</td>
+            <td class="benefit">2,700 - 5,000 INR fixed</td>
+            <td>Fast processing, complete data privacy, predictable billing</td>
+        </tr>
+        <tr>
+            <td>Cloud API (OpenRouter/OpenAI)</td>
+            <td class="warning">Can exceed 80,000 INR at scale</td>
+            <td>Easier setup, but cost grows with every document uploaded</td>
+        </tr>
+    </table>
+
+    <h4>C. Vector Database: Qdrant</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "This is a specialized database for storing and searching the document embeddings.
+        Qdrant gives us the same capabilities as expensive alternatives at a fraction of the cost."
+    </div>
+    <ul>
+        <li><span class="benefit">3-5x cheaper</span> than Pinecone for identical features</li>
+        <li>Advanced filtering - search by student, course, date, any criteria</li>
+        <li>Hybrid search - combines text matching with AI similarity</li>
+        <li>Can self-host for development, use managed cloud for production</li>
+    </ul>
+
+    <h4>D. LLM Strategy: OpenRouter Multi-Model</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "Instead of being locked to one AI provider, we use a routing service that gives
+        access to 100+ models through one connection. This means reliability, cost optimization, and flexibility."
+    </div>
+    <table>
+        <tr>
+            <th>Task Type</th>
+            <th>Model Used</th>
+            <th>Why</th>
+        </tr>
+        <tr>
+            <td>Quick Q&A, simple queries</td>
+            <td>Llama 3.1 / DeepSeek (cheap)</td>
+            <td>Fast, low cost, good enough for simple tasks</td>
+        </tr>
+        <tr>
+            <td>Regular conversations</td>
+            <td>GPT-4o-mini / Gemini</td>
+            <td>Good balance of quality and cost</td>
+        </tr>
+        <tr>
+            <td>Essay writing, SOPs, LORs</td>
+            <td>Claude 3.5 Sonnet</td>
+            <td>Best at long-form writing</td>
+        </tr>
+        <tr>
+            <td>Complex analysis, reasoning</td>
+            <td>GPT-4o / Claude 3.5</td>
+            <td>Most capable for difficult questions</td>
+        </tr>
+    </table>
+    <p><strong>Premium Feature:</strong> Let users choose their AI tier (Standard free, Premium paid) = additional
+        revenue stream.</p>
+
+    <h4>E. Live Data: Search API Integration</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "For information that changes frequently - visa rules, university rankings,
+        scholarship deadlines - we pull fresh data from the internet in real-time instead of maintaining outdated
+        databases."
+    </div>
+    <ul>
+        <li>Always current information (no stale data)</li>
+        <li>Answers include source links (builds user trust)</li>
+        <li>No need to manually update databases</li>
+        <li>Covers: visa regulations, university info, job market, scholarships</li>
+    </ul>
+
+    <h4>F. Custom AI Agents Per Module</h4>
+    <div class="say-box">
+        <strong>Explain:</strong> "Each module gets its own specialized AI personality - a visa expert for visa
+        questions, an essay coach for writing, a career counselor for job guidance. Each trained on curated, verified
+        content for that domain."
+    </div>
+    <table>
+        <tr>
+            <th>Module</th>
+            <th>AI Personality</th>
+            <th>Trained On</th>
+        </tr>
+        <tr>
+            <td>Visa Ready</td>
+            <td>Visa Consultant</td>
+            <td>Immigration regulations, embassy guidelines</td>
+        </tr>
+        <tr>
+            <td>Essay & Doc</td>
+            <td>Writing Coach</td>
+            <td>Successful application essays, SOP examples</td>
+        </tr>
+        <tr>
+            <td>AI Test Prep</td>
+            <td>Exam Expert</td>
+            <td>JEE/NEET/SAT patterns, strategies</td>
+        </tr>
+        <tr>
+            <td>Wellness</td>
+            <td>Support Companion</td>
+            <td>Mental health best practices, coping strategies</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <h3>Section 4: Module Improvements <span class="time-badge">10 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s4-1"><label for="s4-1">Brief overview of all 12 modules</label></li>
+        <li><input type="checkbox" id="s4-2"><label for="s4-2">Ask which modules are highest priority</label></li>
+        <li><input type="checkbox" id="s4-3"><label for="s4-3">Note their answers for MVP planning</label></li>
+    </ul>
+
+    <table>
+        <tr>
+            <th>Module</th>
+            <th>Key Improvements</th>
+        </tr>
+        <tr>
+            <td>UniAssist Chat</td>
+            <td>Streaming responses (real-time), persistent history, context-aware</td>
+        </tr>
+        <tr>
+            <td>Diagnostic Tests</td>
+            <td>Progress auto-saved, detailed analytics, resume if interrupted</td>
+        </tr>
+        <tr>
+            <td>Profile Pro</td>
+            <td>Data shared across ALL modules, AI recommendations</td>
+        </tr>
+        <tr>
+            <td>Campus Quest</td>
+            <td>Real-time university data, side-by-side comparison tool</td>
+        </tr>
+        <tr>
+            <td>AI Test Prep</td>
+            <td>Adaptive difficulty, covers JEE/NEET/SAT/CUET and more</td>
+        </tr>
+        <tr>
+            <td>Work & Settle</td>
+            <td>Live job market data, PR pathway information</td>
+        </tr>
+        <tr>
+            <td>Money Matters</td>
+            <td>Smart scholarship matching, deadline alerts</td>
+        </tr>
+        <tr>
+            <td>Visa Ready</td>
+            <td>Interactive checklists, mock interview with AI</td>
+        </tr>
+        <tr>
+            <td>Essay & Doc</td>
+            <td>AI-assisted writing, multiple templates, live preview</td>
+        </tr>
+        <tr>
+            <td>Study Tools</td>
+            <td>PDF to notes/quizzes/summaries, faster processing</td>
+        </tr>
+        <tr>
+            <td>Wellness</td>
+            <td>Private AI check-ins, mood tracking, resource suggestions</td>
+        </tr>
+        <tr>
+            <td>PPT Generator</td>
+            <td>Progress indicator, faster generation, better templates</td>
+        </tr>
+    </table>
+
+    <div class="ask-box">
+        <strong>Ask:</strong> "Which of these modules are most critical for your users? This will help us prioritize the
+        development roadmap and define the MVP scope."
+    </div>
+
+    <hr>
+
+    <h3>Section 5: Timeline & Cost <span class="time-badge">10 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s5-1"><label for="s5-1">Present high-level timeline</label></li>
+        <li><input type="checkbox" id="s5-2"><label for="s5-2">Show cost comparison vs current</label></li>
+        <li><input type="checkbox" id="s5-3"><label for="s5-3">Explain what we will send after meeting</label></li>
+        <li><input type="checkbox" id="s5-4"><label for="s5-4">Explain what we need from them</label></li>
+    </ul>
+
+    <table>
+        <tr>
+            <th>Phase</th>
+            <th>Duration</th>
+            <th>What Gets Done</th>
+        </tr>
+        <tr>
+            <td>Phase 1: Foundation</td>
+            <td>3 weeks</td>
+            <td>Project setup, auth, base UI, infrastructure</td>
+        </tr>
+        <tr>
+            <td>Phase 2: Core Modules</td>
+            <td>4-6 weeks</td>
+            <td>Chat, Profile Pro, University Finder, Test Prep</td>
+        </tr>
+        <tr>
+            <td>Phase 3: Additional Modules</td>
+            <td>4-6 weeks</td>
+            <td>Remaining 8 modules</td>
+        </tr>
+        <tr>
+            <td>Phase 4: Polish & Testing</td>
+            <td>2 weeks</td>
+            <td>Bug fixes, performance, user testing</td>
+        </tr>
+        <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>12-16 weeks</strong></td>
+            <td></td>
+        </tr>
+    </table>
+
+    <h4>Cost Comparison</h4>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Current (Estimated)</th>
+            <th>Proposed</th>
+        </tr>
+        <tr>
+            <td>Monthly Hosting (12 Streamlit apps)</td>
+            <td>20,000 - 25,000 INR</td>
+            <td>5,000 - 8,000 INR</td>
+        </tr>
+        <tr>
+            <td>Database (MongoDB)</td>
+            <td>2,700 - 9,000 INR</td>
+            <td>Same</td>
+        </tr>
+        <tr>
+            <td>LLM (OpenRouter)</td>
+            <td>4,500 - 27,000 INR</td>
+            <td>Same (with optimization)</td>
+        </tr>
+        <tr>
+            <td>Embeddings</td>
+            <td>Variable/Unknown</td>
+            <td>2,700 - 5,000 INR fixed</td>
+        </tr>
+        <tr>
+            <td>Vector DB (Qdrant)</td>
+            <td>N/A or higher</td>
+            <td>1,800 - 13,600 INR</td>
+        </tr>
+        <tr>
+            <td>Cloudinary</td>
+            <td>10,000 INR</td>
+            <td>Same</td>
+        </tr>
+        <tr>
+            <td class="benefit"><strong>Total Monthly</strong></td>
+            <td><strong>~40,000 - 70,000 INR</strong></td>
+            <td class="benefit"><strong>21,700 - 68,600 INR</strong></td>
+        </tr>
+        <tr>
+            <td class="benefit"><strong>Projected Savings</strong></td>
+            <td colspan="2" class="benefit"><strong>10,000 - 17,000 INR/month on infrastructure alone</strong></td>
+        </tr>
+    </table>
+
+    <h4>We Will Send After This Meeting:</h4>
+    <ul>
+        <li>Detailed technical proposal document</li>
+        <li>Requirements gathering questionnaire</li>
+        <li>Timeline with milestones and deliverables</li>
+        <li>Cost breakdown by phase</li>
+    </ul>
+
+    <h4>We Need From You:</h4>
+    <ul>
+        <li>Priority ranking of modules for MVP</li>
+        <li>Design preferences (colors, fonts, brand guidelines if any)</li>
+        <li>Any existing user data that needs migration</li>
+        <li>Access requirements (who else will use admin features?)</li>
+        <li>Preferred communication channel for updates</li>
+    </ul>
+
+    <hr>
+
+    <h3>Section 6: Q&A <span class="time-badge">15-20 min</span></h3>
+
+    <ul class="checklist">
+        <li><input type="checkbox" id="s6-1"><label for="s6-1">Answer all questions from client</label></li>
+        <li><input type="checkbox" id="s6-2"><label for="s6-2">Note questions to follow up on</label></li>
+        <li><input type="checkbox" id="s6-3"><label for="s6-3">Confirm next actions</label></li>
+        <li><input type="checkbox" id="s6-4"><label for="s6-4">Set follow-up meeting date</label></li>
+    </ul>
+
+    <table>
+        <tr>
+            <th>If They Ask</th>
+            <th>Your Response</th>
+        </tr>
+        <tr>
+            <td>Technical question you know well</td>
+            <td>Answer directly and confidently. Offer to include more detail in the written proposal.</td>
+        </tr>
+        <tr>
+            <td>Question you are not sure about</td>
+            <td>"That is a good question. I will research this thoroughly and include the answer in our detailed
+                proposal."</td>
+        </tr>
+        <tr>
+            <td>About exact development costs</td>
+            <td>Give high-level ranges only. Say the detailed breakdown will be in the written proposal.</td>
+        </tr>
+        <tr>
+            <td>Express concerns or hesitation</td>
+            <td>Listen fully without interrupting. Acknowledge the concern is valid. Explain how our approach addresses
+                it. If it cannot be fully addressed, be honest about tradeoffs.</td>
+        </tr>
+        <tr>
+            <td>About timeline guarantees</td>
+            <td>"The 12-16 week estimate assumes the scope we discussed. We will finalize exact timelines after
+                confirming MVP requirements."</td>
+        </tr>
+    </table>
+
+    <div class="say-box">
+        <strong>Closing:</strong> "Thank you for your time today. To summarize our next steps: We will send you the
+        detailed proposal and requirements form by [DATE]. Once you complete the requirements form, we will schedule a
+        follow-up call to finalize scope and timeline. Does that work for you?"
+    </div>
+
+    <hr>
+
+    <h2>Current UI - Problems to Demonstrate</h2>
+
+    <div class="image-box">
+        <h4>1. Chat Interface</h4>
+        <img src="file:///C:/Users/roush/.gemini/antigravity/brain/b6be16a2-5f62-4fbb-8994-333980192ea8/uploaded_image_0_1768819292229.png"
+            alt="Chat UI">
+        <div class="drawbacks">
+            <strong>Point out these issues:</strong>
+            <ul>
+                <li>Token exposed in URL bar (see the long string after "token=") - security risk</li>
+                <li>Basic Streamlit default styling - looks like a prototype, not production</li>
+                <li>Chat history not reliably saved - users lose conversations</li>
+                <li>No streaming - response appears all at once after delay</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="image-box">
+        <h4>2. PPT Generator</h4>
+        <img src="file:///C:/Users/roush/.gemini/antigravity/brain/b6be16a2-5f62-4fbb-8994-333980192ea8/uploaded_image_1_1768819292229.png"
+            alt="PPT Generator">
+        <div class="drawbacks">
+            <strong>Point out these issues:</strong>
+            <ul>
+                <li>No progress indicator during generation - users do not know if it is working</li>
+                <li>Red button color suggests error or danger, confusing for primary action</li>
+                <li>Entire UI freezes while processing - cannot do anything else</li>
+                <li>Simple text input for complex task - no guidance or templates</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="image-box">
+        <h4>3. Resume Builder (Essay & Doc)</h4>
+        <img src="file:///C:/Users/roush/.gemini/antigravity/brain/b6be16a2-5f62-4fbb-8994-333980192ea8/uploaded_image_2_1768819292229.png"
+            alt="Resume Builder">
+        <div class="drawbacks">
+            <strong>Point out these issues:</strong>
+            <ul>
+                <li>No live preview - users cannot see what resume will look like</li>
+                <li>Mixed styling throughout the form - looks inconsistent</li>
+                <li>Form data not saved if user navigates away - work lost</li>
+                <li>Generic file upload component - no drag and drop feedback</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="image-box">
+        <h4>4. Money Matters / Scholarships</h4>
+        <img src="file:///C:/Users/roush/.gemini/antigravity/brain/b6be16a2-5f62-4fbb-8994-333980192ea8/uploaded_image_4_1768819292229.png"
+            alt="Money Matters">
+        <div class="drawbacks">
+            <strong>Point out these issues:</strong>
+            <ul>
+                <li>"CONNECTING" status stuck in top right - shows reliability problems</li>
+                <li>Form is very dense with no visual breathing room - overwhelming</li>
+                <li>No validation feedback on inputs - users do not know if data is correct</li>
+                <li>Tiny stepper controls (+/-) - hard to use on mobile</li>
+            </ul>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>Quick Reference - Key Selling Points</h2>
+    <table>
+        <tr>
+            <th>Decision</th>
+            <th>What to Say</th>
+        </tr>
+        <tr>
+            <td>Modular Monolith</td>
+            <td>"Single system, lower costs, right-sized for your team, can scale later"</td>
+        </tr>
+        <tr>
+            <td>Self-Hosted Embeddings</td>
+            <td>"Fixed monthly cost, no surprises, faster processing, complete privacy"</td>
+        </tr>
+        <tr>
+            <td>Qdrant</td>
+            <td>"Same features as expensive alternatives at 3-5x lower cost"</td>
+        </tr>
+        <tr>
+            <td>OpenRouter</td>
+            <td>"Access to all major AI providers, no vendor lock-in, automatic failover"</td>
+        </tr>
+        <tr>
+            <td>Search API</td>
+            <td>"Always current information, no stale databases to maintain"</td>
+        </tr>
+        <tr>
+            <td>Custom AI Agents</td>
+            <td>"Specialized expert for each module, trained on verified content, safer responses"</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    <div class="notes-section">
+        <h2>Meeting Notes (Auto-Saves to Browser)</h2>
+
+        <label class="note-label">Priority Modules (what did they say is most important?):</label>
+        <textarea class="note-field" id="note-modules"
+            placeholder="List the modules they mentioned as critical for MVP..."></textarea>
+
+        <label class="note-label">Specific Requirements Mentioned:</label>
+        <textarea class="note-field" id="note-requirements"
+            placeholder="Any features, integrations, design preferences, or specific needs they mentioned..."></textarea>
+
+        <label class="note-label">Questions to Follow Up (things you said you would research):</label>
+        <textarea class="note-field" id="note-questions"
+            placeholder="Questions you committed to answering in the proposal..."></textarea>
+
+        <label class="note-label">Concerns or Objections Raised:</label>
+        <textarea class="note-field" id="note-concerns"
+            placeholder="Any hesitations, worries, or pushback to address..."></textarea>
+
+        <label class="note-label">Timeline/Deadline Expectations:</label>
+        <textarea class="note-field" id="note-timeline"
+            placeholder="Any specific dates, launch targets, or deadlines they mentioned..."></textarea>
+
+        <label class="note-label">Other Important Notes:</label>
+        <textarea class="note-field" id="note-other"
+            placeholder="Anything else important from the meeting..."></textarea>
+
+        <label class="note-label">Agreed Next Steps:</label>
+        <textarea class="note-field" id="note-nextsteps"
+            placeholder="What was agreed for follow-up? When is next meeting?"></textarea>
+
+        <div class="btn-group">
+            <button class="save-btn" onclick="saveNotes()">Save Notes</button>
+            <button class="clear-btn" onclick="clearNotes()">Clear All</button>
+            <button class="export-btn" onclick="exportNotes()">Export as Text</button>
+            <span class="save-status" id="save-status"></span>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>Post-Meeting Checklist</h2>
+    <ul class="checklist" id="post-meeting-checklist">
+        <li><input type="checkbox" id="post1"><label for="post1">Export notes from this page</label></li>
+        <li><input type="checkbox" id="post2"><label for="post2">Share notes with team members</label></li>
+        <li><input type="checkbox" id="post3"><label for="post3">Research any questions you committed to
+                answering</label></li>
+        <li><input type="checkbox" id="post4"><label for="post4">Prepare detailed technical proposal document</label>
+        </li>
+        <li><input type="checkbox" id="post5"><label for="post5">Create requirements gathering questionnaire</label>
+        </li>
+        <li><input type="checkbox" id="post6"><label for="post6">Send proposal and questionnaire to client</label></li>
+        <li><input type="checkbox" id="post7"><label for="post7">Schedule follow-up meeting</label></li>
+    </ul>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('meeting-date').valueAsDate = new Date();
+
+        // Load all saved data on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load notes
+            const noteFields = ['note-modules', 'note-requirements', 'note-questions', 'note-concerns', 'note-timeline', 'note-other', 'note-nextsteps'];
+            noteFields.forEach(function (id) {
+                const saved = localStorage.getItem('uniassist_' + id);
+                if (saved) document.getElementById(id).value = saved;
+            });
+
+            // Load checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+                const saved = localStorage.getItem('uniassist_cb_' + cb.id);
+                if (saved === 'true') cb.checked = true;
+            });
+
+            // Load meeting info
+            const savedDate = localStorage.getItem('uniassist_meeting_date');
+            const savedTime = localStorage.getItem('uniassist_meeting_time');
+            const savedDuration = localStorage.getItem('uniassist_meeting_duration');
+            if (savedDate) document.getElementById('meeting-date').value = savedDate;
+            if (savedTime) document.getElementById('meeting-time').value = savedTime;
+            if (savedDuration) document.getElementById('meeting-duration').value = savedDuration;
+
+            updateProgress();
+        });
+
+        // Auto-save notes on typing
+        document.querySelectorAll('.note-field').forEach(function (field) {
+            field.addEventListener('input', function () {
+                localStorage.setItem('uniassist_' + this.id, this.value);
+                showSaveStatus('Auto-saved');
+            });
+        });
+
+        // Save checkbox state on change
+        document.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+            cb.addEventListener('change', function () {
+                localStorage.setItem('uniassist_cb_' + this.id, this.checked);
+                updateProgress();
+            });
+        });
+
+        // Save meeting info on change
+        document.getElementById('meeting-date').addEventListener('change', function () {
+            localStorage.setItem('uniassist_meeting_date', this.value);
+        });
+        document.getElementById('meeting-time').addEventListener('change', function () {
+            localStorage.setItem('uniassist_meeting_time', this.value);
+        });
+        document.getElementById('meeting-duration').addEventListener('change', function () {
+            localStorage.setItem('uniassist_meeting_duration', this.value);
+        });
+
+        // Update progress bar
+        function updateProgress() {
+            const total = document.querySelectorAll('input[type="checkbox"]').length;
+            const checked = document.querySelectorAll('input[type="checkbox"]:checked').length;
+            const percent = total > 0 ? (checked / total * 100) : 0;
+            document.getElementById('checklist-progress').style.width = percent + '%';
+            document.getElementById('checklist-count').textContent = checked;
+            document.getElementById('checklist-total').textContent = total;
+        }
+
+        // Manual save button
+        function saveNotes() {
+            const noteFields = ['note-modules', 'note-requirements', 'note-questions', 'note-concerns', 'note-timeline', 'note-other', 'note-nextsteps'];
+            noteFields.forEach(function (id) {
+                localStorage.setItem('uniassist_' + id, document.getElementById(id).value);
+            });
+            showSaveStatus('All notes saved!');
+        }
+
+        // Show save status
+        function showSaveStatus(msg) {
+            const status = document.getElementById('save-status');
+            status.textContent = msg;
+            status.style.display = 'inline';
+            setTimeout(function () { status.style.display = 'none'; }, 2000);
+        }
+
+        // Clear all notes
+        function clearNotes() {
+            if (confirm('Are you sure you want to clear ALL notes and checkboxes? This cannot be undone.')) {
+                // Clear notes
+                const noteFields = ['note-modules', 'note-requirements', 'note-questions', 'note-concerns', 'note-timeline', 'note-other', 'note-nextsteps'];
+                noteFields.forEach(function (id) {
+                    document.getElementById(id).value = '';
+                    localStorage.removeItem('uniassist_' + id);
+                });
+
+                // Clear checkboxes
+                document.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
+                    cb.checked = false;
+                    localStorage.removeItem('uniassist_cb_' + cb.id);
+                });
+
+                updateProgress();
+                showSaveStatus('All cleared');
+            }
+        }
+
+        // Export notes as text
+        function exportNotes() {
+            const date = document.getElementById('meeting-date').value;
+            const time = document.getElementById('meeting-time').value;
+
+            let text = 'UNIASSIST.AI - MEETING NOTES\n';
+            text += '================================\n';
+            text += 'Date: ' + date + '\n';
+            text += 'Time: ' + time + '\n\n';
+
+            text += 'PRIORITY MODULES:\n' + document.getElementById('note-modules').value + '\n\n';
+            text += 'REQUIREMENTS MENTIONED:\n' + document.getElementById('note-requirements').value + '\n\n';
+            text += 'QUESTIONS TO FOLLOW UP:\n' + document.getElementById('note-questions').value + '\n\n';
+            text += 'CONCERNS RAISED:\n' + document.getElementById('note-concerns').value + '\n\n';
+            text += 'TIMELINE EXPECTATIONS:\n' + document.getElementById('note-timeline').value + '\n\n';
+            text += 'OTHER NOTES:\n' + document.getElementById('note-other').value + '\n\n';
+            text += 'AGREED NEXT STEPS:\n' + document.getElementById('note-nextsteps').value + '\n';
+
+            // Create download
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'UniAssist_Meeting_Notes_' + date + '.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+</body>
+
+</html>

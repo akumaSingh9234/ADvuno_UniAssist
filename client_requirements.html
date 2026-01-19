@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Requirements Form - UniAssist.ai</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #888;
+            text-decoration: none;
+            margin: 20px 0;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .form-section {
+            background: #12122a;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 1px solid #222;
+        }
+
+        .form-section h2 {
+            color: #f5576c;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section h2 span {
+            background: rgba(245, 87, 108, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group .hint {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: #0a0a1a;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #0a0a1a;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid #222;
+            transition: all 0.3s;
+        }
+
+        .checkbox-item:hover {
+            border-color: #f5576c;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #f5576c;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checkbox-item.checked {
+            background: rgba(245, 87, 108, 0.1);
+            border-color: #f5576c;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: #0a0a1a;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 1px solid #222;
+            transition: all 0.3s;
+        }
+
+        .radio-item:hover {
+            border-color: #f5576c;
+        }
+
+        .radio-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: #f5576c;
+            cursor: pointer;
+        }
+
+        .radio-item.checked {
+            background: rgba(245, 87, 108, 0.1);
+            border-color: #f5576c;
+        }
+
+        .color-picker-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .color-picker input[type="color"] {
+            width: 50px;
+            height: 40px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .color-picker span {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .range-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .range-group input[type="range"] {
+            flex: 1;
+            min-width: 200px;
+            accent-color: #f5576c;
+        }
+
+        .range-value {
+            background: #0a0a1a;
+            padding: 8px 15px;
+            border-radius: 6px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .priority-item {
+            background: #0a0a1a;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #222;
+        }
+
+        .priority-item h4 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .priority-item select {
+            padding: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-danger {
+            background: rgba(245, 87, 108, 0.2);
+            color: #f5576c;
+        }
+
+        .save-indicator {
+            padding: 10px 20px;
+            background: rgba(56, 239, 125, 0.2);
+            color: #38ef7d;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .preview-section {
+            background: #1a1a3e;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 1px dashed #667eea;
+        }
+
+        .preview-section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .preview-item {
+            background: #12122a;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .preview-item .label {
+            color: #888;
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .preview-item .value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .font-preview {
+            padding: 20px;
+            background: #0a0a1a;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .form-section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Client Requirements Form</h1>
+        <p>Help us understand your vision. Your inputs directly shape the final product design and functionality.</p>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-link">Back to Portal</a>
+
+        <!-- Section 1: Basic Info -->
+        <div class="form-section">
+            <h2>Company & Contact <span>Required</span></h2>
+
+            <div class="form-group">
+                <label>Company/Organization Name</label>
+                <input type="text" id="company-name" placeholder="e.g., UniAssist.ai">
+            </div>
+
+            <div class="form-group">
+                <label>Primary Contact Name</label>
+                <input type="text" id="contact-name" placeholder="Your full name">
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="contact-email" placeholder="your@email.com">
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number (Optional)</label>
+                <input type="text" id="contact-phone" placeholder="+91 ...">
+            </div>
+        </div>
+
+        <!-- Section 2: Module Priority -->
+        <div class="form-section">
+            <h2>Module Priority <span>Important</span></h2>
+            <p class="hint" style="margin-bottom: 20px;">Rate each module's importance for your MVP (1 = Low, 5 =
+                Critical)</p>
+
+            <div class="priority-grid">
+                <div class="priority-item">
+                    <h4>UniAssist Chat</h4>
+                    <select id="priority-chat">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Diagnostic Tests</h4>
+                    <select id="priority-diagnostic">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Profile Pro</h4>
+                    <select id="priority-profile">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Campus Quest</h4>
+                    <select id="priority-campus">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>AI Test Prep</h4>
+                    <select id="priority-testprep">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Work & Settle</h4>
+                    <select id="priority-work">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Money Matters</h4>
+                    <select id="priority-money">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Visa Ready</h4>
+                    <select id="priority-visa">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Essay & Doc</h4>
+                    <select id="priority-essay">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Study Tools</h4>
+                    <select id="priority-study">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>Wellness Support</h4>
+                    <select id="priority-wellness">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+                <div class="priority-item">
+                    <h4>PPT Generator</h4>
+                    <select id="priority-ppt">
+                        <option value="1">1 - Low</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3 - Medium</option>
+                        <option value="4">4</option>
+                        <option value="5">5 - Critical</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Design Preferences -->
+        <div class="form-section">
+            <h2>Design & UI Preferences <span>Branding</span></h2>
+
+            <div class="form-group">
+                <label>Overall Theme</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="theme" value="dark" checked> Dark Mode</label>
+                    <label class="radio-item"><input type="radio" name="theme" value="light"> Light Mode</label>
+                    <label class="radio-item"><input type="radio" name="theme" value="both"> Both (User Choice)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Color Scheme</label>
+                <p class="hint">Choose your primary and secondary brand colors</p>
+                <div class="color-picker-group">
+                    <div class="color-picker">
+                        <input type="color" id="primary-color" value="#667eea">
+                        <span>Primary Color</span>
+                    </div>
+                    <div class="color-picker">
+                        <input type="color" id="secondary-color" value="#764ba2">
+                        <span>Secondary Color</span>
+                    </div>
+                    <div class="color-picker">
+                        <input type="color" id="accent-color" value="#38ef7d">
+                        <span>Accent Color</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Design Style</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="style-modern" checked> Modern &
+                        Clean</label>
+                    <label class="checkbox-item"><input type="checkbox" id="style-minimal"> Minimal</label>
+                    <label class="checkbox-item"><input type="checkbox" id="style-gradient"> Gradients</label>
+                    <label class="checkbox-item"><input type="checkbox" id="style-glassmorphism"> Glassmorphism</label>
+                    <label class="checkbox-item"><input type="checkbox" id="style-animations"> Animations</label>
+                    <label class="checkbox-item"><input type="checkbox" id="style-cards"> Card-based Layout</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Corner Style</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="corners" value="rounded" checked>
+                        Rounded</label>
+                    <label class="radio-item"><input type="radio" name="corners" value="sharp"> Sharp</label>
+                    <label class="radio-item"><input type="radio" name="corners" value="pill"> Pill/Capsule</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Typography -->
+        <div class="form-section">
+            <h2>Typography <span>Fonts</span></h2>
+
+            <div class="form-group">
+                <label>Preferred Font Family</label>
+                <select id="font-family" onchange="updateFontPreview()">
+                    <option value="Inter">Inter (Modern, Clean)</option>
+                    <option value="Roboto">Roboto (Google Standard)</option>
+                    <option value="Poppins">Poppins (Friendly, Rounded)</option>
+                    <option value="Outfit">Outfit (Contemporary)</option>
+                    <option value="DM Sans">DM Sans (Elegant)</option>
+                    <option value="Nunito">Nunito (Soft, Approachable)</option>
+                    <option value="Open Sans">Open Sans (Readable)</option>
+                    <option value="custom">Custom (Specify below)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Custom Font (if selected above)</label>
+                <input type="text" id="custom-font" placeholder="e.g., Montserrat, Lato, etc.">
+            </div>
+
+            <div class="form-group">
+                <label>Base Font Size</label>
+                <div class="range-group">
+                    <input type="range" id="font-size" min="14" max="20" value="16" onchange="updateFontPreview()">
+                    <span class="range-value" id="font-size-value">16px</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Font Preview</label>
+                <div class="font-preview" id="font-preview">
+                    <h3 style="margin-bottom: 10px;">Heading Text Sample</h3>
+                    <p>This is how your body text will look. The quick brown fox jumps over the lazy dog.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: UX Preferences -->
+        <div class="form-section">
+            <h2>User Experience <span>UX</span></h2>
+
+            <div class="form-group">
+                <label>Navigation Style</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="nav-style" value="sidebar" checked> Sidebar
+                        (Current style)</label>
+                    <label class="radio-item"><input type="radio" name="nav-style" value="topnav"> Top
+                        Navigation</label>
+                    <label class="radio-item"><input type="radio" name="nav-style" value="both"> Both</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Information Density</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="density" value="compact"> Compact (More info per
+                        screen)</label>
+                    <label class="radio-item"><input type="radio" name="density" value="comfortable" checked>
+                        Comfortable (Balanced)</label>
+                    <label class="radio-item"><input type="radio" name="density" value="spacious"> Spacious (More
+                        whitespace)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Important UX Features</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="ux-progress" checked> Progress
+                        indicators</label>
+                    <label class="checkbox-item"><input type="checkbox" id="ux-autosave" checked> Auto-save
+                        forms</label>
+                    <label class="checkbox-item"><input type="checkbox" id="ux-tooltips"> Tooltips/Help text</label>
+                    <label class="checkbox-item"><input type="checkbox" id="ux-shortcuts"> Keyboard shortcuts</label>
+                    <label class="checkbox-item"><input type="checkbox" id="ux-notifications"> Toast
+                        notifications</label>
+                    <label class="checkbox-item"><input type="checkbox" id="ux-darkmode"> Dark/Light toggle</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Additional Features -->
+        <div class="form-section">
+            <h2>Additional Requests <span>Optional</span></h2>
+
+            <div class="form-group">
+                <label>Required Integrations</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="int-google"> Google Login</label>
+                    <label class="checkbox-item"><input type="checkbox" id="int-whatsapp"> WhatsApp Bot</label>
+                    <label class="checkbox-item"><input type="checkbox" id="int-payment"> Payment Gateway</label>
+                    <label class="checkbox-item"><input type="checkbox" id="int-analytics"> Analytics</label>
+                    <label class="checkbox-item"><input type="checkbox" id="int-email"> Email Notifications</label>
+                    <label class="checkbox-item"><input type="checkbox" id="int-sms"> SMS Notifications</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Target Devices</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="device-desktop" checked> Desktop</label>
+                    <label class="checkbox-item"><input type="checkbox" id="device-tablet" checked> Tablet</label>
+                    <label class="checkbox-item"><input type="checkbox" id="device-mobile" checked> Mobile</label>
+                    <label class="checkbox-item"><input type="checkbox" id="device-pwa"> PWA (Installable)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Languages Required</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item"><input type="checkbox" id="lang-en" checked> English</label>
+                    <label class="checkbox-item"><input type="checkbox" id="lang-hi"> Hindi</label>
+                    <label class="checkbox-item"><input type="checkbox" id="lang-regional"> Regional Languages</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Reference Websites (Designs you like)</label>
+                <p class="hint">Share URLs of websites whose design or UX you admire</p>
+                <textarea id="reference-sites"
+                    placeholder="https://example.com - I like their dashboard layout&#10;https://another.com - Great color scheme"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Specific Requirements or Concerns</label>
+                <p class="hint">Any other details, pain points with current system, or must-have features</p>
+                <textarea id="other-requirements"
+                    placeholder="e.g., We need the diagnostic test to save progress every 5 questions..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Existing Brand Assets</label>
+                <p class="hint">Do you have logos, brand guidelines, or design files to share?</p>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="assets" value="yes"> Yes, we will share</label>
+                    <label class="radio-item"><input type="radio" name="assets" value="no" checked> No, design from
+                        scratch</label>
+                    <label class="radio-item"><input type="radio" name="assets" value="partial"> Partial (logo
+                        only)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Link to Brand Assets (if available)</label>
+                <input type="url" id="assets-link" placeholder="https://drive.google.com/... or Dropbox link">
+            </div>
+        </div>
+
+        <!-- Section 7: Timeline -->
+        <div class="form-section">
+            <h2>Timeline & Budget <span>Planning</span></h2>
+
+            <div class="form-group">
+                <label>Expected Launch Date</label>
+                <input type="date" id="launch-date">
+            </div>
+
+            <div class="form-group">
+                <label>Priority for Launch</label>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="launch-priority" value="fast"> Fast (MVP first,
+                        enhance later)</label>
+                    <label class="radio-item"><input type="radio" name="launch-priority" value="balanced" checked>
+                        Balanced (Core features complete)</label>
+                    <label class="radio-item"><input type="radio" name="launch-priority" value="complete"> Complete (All
+                        features ready)</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Any Hard Deadlines?</label>
+                <textarea id="deadlines" placeholder="e.g., Must launch before admission season in March..."></textarea>
+            </div>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section">
+            <h2>Your Selections Summary</h2>
+            <div class="preview-grid" id="preview-grid">
+                <div class="preview-item">
+                    <div class="label">Company</div>
+                    <div class="value" id="preview-company">-</div>
+                </div>
+                <div class="preview-item">
+                    <div class="label">Theme</div>
+                    <div class="value" id="preview-theme">Dark Mode</div>
+                </div>
+                <div class="preview-item">
+                    <div class="label">Primary Color</div>
+                    <div class="value" id="preview-primary" style="display: flex; align-items: center; gap: 10px;">
+                        <span style="width: 20px; height: 20px; border-radius: 4px; background: #667eea;"></span>
+                        #667eea
+                    </div>
+                </div>
+                <div class="preview-item">
+                    <div class="label">Font</div>
+                    <div class="value" id="preview-font">Inter, 16px</div>
+                </div>
+                <div class="preview-item">
+                    <div class="label">Navigation</div>
+                    <div class="value" id="preview-nav">Sidebar</div>
+                </div>
+                <div class="preview-item">
+                    <div class="label">Top Priority Modules</div>
+                    <div class="value" id="preview-modules">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="btn-group">
+            <button class="btn btn-primary" onclick="saveForm()">Save Requirements</button>
+            <button class="btn btn-secondary" onclick="exportForm()">Export as JSON</button>
+            <button class="btn btn-danger" onclick="clearForm()">Clear All</button>
+            <span class="save-indicator" id="save-indicator">Saved successfully!</span>
+        </div>
+
+        <footer>
+            <p>UniAssist.ai Client Requirements</p>
+            <p style="margin-top: 5px;">Last Saved: <span id="last-saved">Not saved yet</span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Load saved data
+        function loadForm() {
+            const data = JSON.parse(localStorage.getItem('client_requirements') || '{}');
+
+            // Text inputs
+            ['company-name', 'contact-name', 'contact-email', 'contact-phone', 'custom-font', 'reference-sites', 'other-requirements', 'assets-link', 'deadlines'].forEach(id => {
+                if (data[id]) document.getElementById(id).value = data[id];
+            });
+
+            // Date
+            if (data['launch-date']) document.getElementById('launch-date').value = data['launch-date'];
+
+            // Selects
+            ['priority-chat', 'priority-diagnostic', 'priority-profile', 'priority-campus', 'priority-testprep', 'priority-work', 'priority-money', 'priority-visa', 'priority-essay', 'priority-study', 'priority-wellness', 'priority-ppt', 'font-family'].forEach(id => {
+                if (data[id]) document.getElementById(id).value = data[id];
+            });
+
+            // Colors
+            if (data['primary-color']) document.getElementById('primary-color').value = data['primary-color'];
+            if (data['secondary-color']) document.getElementById('secondary-color').value = data['secondary-color'];
+            if (data['accent-color']) document.getElementById('accent-color').value = data['accent-color'];
+
+            // Range
+            if (data['font-size']) {
+                document.getElementById('font-size').value = data['font-size'];
+                document.getElementById('font-size-value').textContent = data['font-size'] + 'px';
+            }
+
+            // Radio buttons
+            ['theme', 'corners', 'nav-style', 'density', 'assets', 'launch-priority'].forEach(name => {
+                if (data[name]) {
+                    const radio = document.querySelector(`input[name="${name}"][value="${data[name]}"]`);
+                    if (radio) radio.checked = true;
+                }
+            });
+
+            // Checkboxes
+            const checkboxes = ['style-modern', 'style-minimal', 'style-gradient', 'style-glassmorphism', 'style-animations', 'style-cards', 'ux-progress', 'ux-autosave', 'ux-tooltips', 'ux-shortcuts', 'ux-notifications', 'ux-darkmode', 'int-google', 'int-whatsapp', 'int-payment', 'int-analytics', 'int-email', 'int-sms', 'device-desktop', 'device-tablet', 'device-mobile', 'device-pwa', 'lang-en', 'lang-hi', 'lang-regional'];
+            checkboxes.forEach(id => {
+                const el = document.getElementById(id);
+                if (el && data[id] !== undefined) el.checked = data[id];
+            });
+
+            if (data.lastSaved) {
+                document.getElementById('last-saved').textContent = new Date(data.lastSaved).toLocaleString();
+            }
+
+            updatePreview();
+            updateFontPreview();
+        }
+
+        // Save form
+        function saveForm() {
+            const data = {
+                lastSaved: new Date().toISOString()
+            };
+
+            // Text inputs
+            ['company-name', 'contact-name', 'contact-email', 'contact-phone', 'custom-font', 'reference-sites', 'other-requirements', 'assets-link', 'deadlines', 'launch-date'].forEach(id => {
+                data[id] = document.getElementById(id).value;
+            });
+
+            // Selects
+            ['priority-chat', 'priority-diagnostic', 'priority-profile', 'priority-campus', 'priority-testprep', 'priority-work', 'priority-money', 'priority-visa', 'priority-essay', 'priority-study', 'priority-wellness', 'priority-ppt', 'font-family'].forEach(id => {
+                data[id] = document.getElementById(id).value;
+            });
+
+            // Colors
+            data['primary-color'] = document.getElementById('primary-color').value;
+            data['secondary-color'] = document.getElementById('secondary-color').value;
+            data['accent-color'] = document.getElementById('accent-color').value;
+
+            // Range
+            data['font-size'] = document.getElementById('font-size').value;
+
+            // Radio buttons
+            ['theme', 'corners', 'nav-style', 'density', 'assets', 'launch-priority'].forEach(name => {
+                const checked = document.querySelector(`input[name="${name}"]:checked`);
+                if (checked) data[name] = checked.value;
+            });
+
+            // Checkboxes
+            const checkboxes = ['style-modern', 'style-minimal', 'style-gradient', 'style-glassmorphism', 'style-animations', 'style-cards', 'ux-progress', 'ux-autosave', 'ux-tooltips', 'ux-shortcuts', 'ux-notifications', 'ux-darkmode', 'int-google', 'int-whatsapp', 'int-payment', 'int-analytics', 'int-email', 'int-sms', 'device-desktop', 'device-tablet', 'device-mobile', 'device-pwa', 'lang-en', 'lang-hi', 'lang-regional'];
+            checkboxes.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) data[id] = el.checked;
+            });
+
+            localStorage.setItem('client_requirements', JSON.stringify(data));
+
+            document.getElementById('last-saved').textContent = new Date().toLocaleString();
+            const indicator = document.getElementById('save-indicator');
+            indicator.style.display = 'inline-block';
+            setTimeout(() => { indicator.style.display = 'none'; }, 3000);
+
+            updatePreview();
+        }
+
+        // Export as JSON
+        function exportForm() {
+            const data = JSON.parse(localStorage.getItem('client_requirements') || '{}');
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'uniassist_requirements_' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Clear form
+        function clearForm() {
+            if (!confirm('Are you sure you want to clear all data? This cannot be undone.')) return;
+            localStorage.removeItem('client_requirements');
+            location.reload();
+        }
+
+        // Update preview
+        function updatePreview() {
+            document.getElementById('preview-company').textContent = document.getElementById('company-name').value || '-';
+
+            const theme = document.querySelector('input[name="theme"]:checked');
+            document.getElementById('preview-theme').textContent = theme ? theme.parentElement.textContent.trim() : '-';
+
+            const primaryColor = document.getElementById('primary-color').value;
+            document.getElementById('preview-primary').innerHTML = `<span style="width: 20px; height: 20px; border-radius: 4px; background: ${primaryColor};"></span> ${primaryColor}`;
+
+            const font = document.getElementById('font-family').value;
+            const fontSize = document.getElementById('font-size').value;
+            document.getElementById('preview-font').textContent = `${font}, ${fontSize}px`;
+
+            const nav = document.querySelector('input[name="nav-style"]:checked');
+            document.getElementById('preview-nav').textContent = nav ? nav.parentElement.textContent.trim() : '-';
+
+            // Get top priority modules
+            const priorities = [
+                { name: 'Chat', val: document.getElementById('priority-chat').value },
+                { name: 'Diagnostic', val: document.getElementById('priority-diagnostic').value },
+                { name: 'Profile', val: document.getElementById('priority-profile').value },
+                { name: 'Campus', val: document.getElementById('priority-campus').value },
+                { name: 'Test Prep', val: document.getElementById('priority-testprep').value },
+                { name: 'Work', val: document.getElementById('priority-work').value },
+                { name: 'Money', val: document.getElementById('priority-money').value },
+                { name: 'Visa', val: document.getElementById('priority-visa').value },
+                { name: 'Essay', val: document.getElementById('priority-essay').value },
+                { name: 'Study', val: document.getElementById('priority-study').value },
+                { name: 'Wellness', val: document.getElementById('priority-wellness').value },
+                { name: 'PPT', val: document.getElementById('priority-ppt').value }
+            ];
+            const top = priorities.filter(p => parseInt(p.val) >= 4).map(p => p.name);
+            document.getElementById('preview-modules').textContent = top.length ? top.join(', ') : 'None rated 4+';
+        }
+
+        // Update font preview
+        function updateFontPreview() {
+            const font = document.getElementById('font-family').value;
+            const size = document.getElementById('font-size').value;
+            const preview = document.getElementById('font-preview');
+
+            document.getElementById('font-size-value').textContent = size + 'px';
+
+            // Load font from Google
+            const link = document.createElement('link');
+            link.href = `https://fonts.googleapis.com/css2?family=${font.replace(' ', '+')}&display=swap`;
+            link.rel = 'stylesheet';
+            document.head.appendChild(link);
+
+            preview.style.fontFamily = `'${font}', sans-serif`;
+            preview.style.fontSize = size + 'px';
+        }
+
+        // Checkbox styling
+        document.querySelectorAll('.checkbox-item input, .radio-item input').forEach(input => {
+            input.addEventListener('change', function () {
+                if (this.type === 'checkbox') {
+                    this.closest('.checkbox-item').classList.toggle('checked', this.checked);
+                } else {
+                    document.querySelectorAll(`input[name="${this.name}"]`).forEach(r => {
+                        r.closest('.radio-item').classList.remove('checked');
+                    });
+                    if (this.checked) this.closest('.radio-item').classList.add('checked');
+                }
+                saveForm();
+            });
+
+            // Initial state
+            if (input.checked) {
+                if (input.type === 'checkbox') input.closest('.checkbox-item').classList.add('checked');
+                else input.closest('.radio-item').classList.add('checked');
+            }
+        });
+
+        // Auto-save on change
+        document.querySelectorAll('input, select, textarea').forEach(el => {
+            el.addEventListener('change', saveForm);
+        });
+
+        // Initialize
+        loadForm();
+    </script>
+</body>
+
+</html>

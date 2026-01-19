@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Strategy & Technical Assessment - UniAssist.ai</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a1a3e 0%, #2d2d5a 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        .meta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        nav {
+            background: #12122a;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #333;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav a {
+            color: #888;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #667eea;
+            border-color: #667eea;
+        }
+
+        section {
+            padding: 50px 0;
+            border-bottom: 1px solid #222;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 3vw, 2rem);
+            color: #fff;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2 span {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #667eea;
+            margin: 30px 0 15px;
+        }
+
+        h4 {
+            font-size: 1rem;
+            color: #a0a0c0;
+            margin: 20px 0 10px;
+        }
+
+        p {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .warning {
+            color: #f5576c;
+        }
+
+        .success {
+            color: #38ef7d;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: #1a1a3e;
+            color: #fff;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #222;
+        }
+
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .card {
+            background: #12122a;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #222;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1a1a3e, #2d2d5a);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-card .label {
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .chart-container {
+            background: #12122a;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            background: #12122a;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .flow-arrow {
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .risk-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+        }
+
+        .risk-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .risk-low {
+            background: #38ef7d;
+        }
+
+        .risk-medium {
+            background: #ffc107;
+        }
+
+        .risk-high {
+            background: #f5576c;
+        }
+
+        .comments-section {
+            background: #12122a;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .comments-section h3 {
+            margin-top: 0;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .comment-input input,
+        .comment-input textarea {
+            flex: 1;
+            min-width: 200px;
+            padding: 12px;
+            border: 1px solid #333;
+            border-radius: 8px;
+            background: #0a0a1a;
+            color: #fff;
+            font-family: inherit;
+        }
+
+        .comment-input textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .comment-input button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .comment-input button:hover {
+            opacity: 0.9;
+        }
+
+        .comment {
+            background: #0a0a1a;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 3px solid #667eea;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .comment-author {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .comment-date {
+            color: #666;
+        }
+
+        .comment-text {
+            color: #b0b0b0;
+        }
+
+        .comment-delete {
+            background: none;
+            border: none;
+            color: #f5576c;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: #888;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .back-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #444;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th,
+            td {
+                padding: 10px 8px;
+            }
+        }
+
+        @media print {
+            nav {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Product Strategy & Technical Rebuild Assessment</h1>
+        <p>UniAssist.ai - From Prototype to Enterprise-Grade SaaS</p>
+        <div class="meta">
+            <span class="meta-item">Document: Strategic Proposal</span>
+            <span class="meta-item">Version: 1.0</span>
+            <span class="meta-item" id="current-date"></span>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#purpose">Purpose</a></li>
+            <li><a href="#problems">Problem Analysis</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#tech-stack">Tech Stack</a></li>
+            <li><a href="#features">Feature Plans</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+            <li><a href="#comments">Comments</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <a href="index.html" class="back-link">Back to Portal</a>
+
+        <!-- Section 1: Purpose -->
+        <section id="purpose">
+            <h2><span>1</span> Purpose of This Document</h2>
+            <p>This document outlines the strategic necessity of re-engineering the UniAssist.ai platform. It provides a
+                transparent analysis of:</p>
+
+            <div class="card-grid">
+                <div class="stat-card">
+                    <div class="number">01</div>
+                    <div class="label">Current Limitations</div>
+                    <p style="margin-top: 10px; font-size: 0.85rem;">Why the existing Streamlit-based system cannot
+                        support commercial growth</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number">02</div>
+                    <div class="label">Proposed Architecture</div>
+                    <p style="margin-top: 10px; font-size: 0.85rem;">A blueprint for a scalable, high-performance system
+                    </p>
+                </div>
+                <div class="stat-card">
+                    <div class="number">03</div>
+                    <div class="label">Technology Choices</div>
+                    <p style="margin-top: 10px; font-size: 0.85rem;">Why specific tools (Next.js, Qdrant, Self-Hosted
+                        AI) were selected</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number">04</div>
+                    <div class="label">Feature Evolution</div>
+                    <p style="margin-top: 10px; font-size: 0.85rem;">How each module transforms to deliver a "co-pilot"
+                        experience</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Problem Analysis -->
+        <section id="problems">
+            <h2><span>2</span> High-Level Problem Analysis</h2>
+
+            <h3>2.1 Performance & Trust</h3>
+            <div class="card">
+                <p><strong class="warning">The Problem:</strong> The current application suffers from noticeable input
+                    lag and slow page loads, particularly during authentication and initial landing.</p>
+                <p><strong>Root Cause:</strong> The underlying framework (Streamlit) re-executes backend scripts on
+                    every interaction. It is designed for internal data tools, not consumer-facing products.</p>
+                <p><strong>Business Impact:</strong> In the education sector, <span class="highlight">performance equals
+                        credibility</span>. A laggy interface signals "unreliable," causing high bounce rates among
+                    students and parents.</p>
+            </div>
+
+            <div class="chart-container">
+                <h4>Performance Impact Visualization</h4>
+                <div class="chart-wrapper">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+
+            <h3>2.2 Fragmented User Experience</h3>
+            <div class="card">
+                <p><strong class="warning">The Problem:</strong> Features function as isolated islands. Data entered in
+                    "Diagnostic Tests" does not inform "University Finder."</p>
+                <p><strong>Root Cause:</strong> Lack of a unified state management layer. The architecture treats every
+                    module as a separate script.</p>
+                <p><strong>Business Impact:</strong> The promise of an "AI Co-Pilot" is broken. A true co-pilot
+                    remembers context; the current system forces users to repeat themselves.</p>
+            </div>
+
+            <h3>2.3 Data Volatility</h3>
+            <div class="card">
+                <p><strong class="warning">The Problem:</strong> User progress in long forms (like Profile Pro) is often
+                    lost if the browser refreshes or the network fluctuates.</p>
+                <p><strong>Root Cause:</strong> Reliance on ephemeral "Session State" (RAM) instead of persistent
+                    database storage.</p>
+                <p><strong>Business Impact:</strong> Critical friction point. Users who lose 20 minutes of work will
+                    <span class="warning">abandon the platform immediately</span>.</p>
+            </div>
+
+            <div class="chart-container">
+                <h4>User Drop-off Analysis</h4>
+                <div class="chart-wrapper">
+                    <canvas id="dropoffChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Architecture -->
+        <section id="architecture">
+            <h2><span>3</span> The Solution: Architecture Strategy</h2>
+            <p>We propose a <span class="highlight">Hybrid Architecture</span> that decouples the User Interface
+                (Frontend) from the Business Logic (Backend) and the Intelligence Layer (AI).</p>
+
+            <h3>3.1 Architectural Design: Modular Monolith</h3>
+            <div class="card">
+                <p><strong>Concept:</strong> A unified backend codebase that is internally modular (Auth module, Chat
+                    module, Payment module).</p>
+                <h4>Why this wins:</h4>
+                <table>
+                    <tr>
+                        <th>Comparison</th>
+                        <th>Modular Monolith</th>
+                        <th>Why Better</th>
+                    </tr>
+                    <tr>
+                        <td>Vs. Microservices</td>
+                        <td class="success">Single Deployment</td>
+                        <td>Avoids massive operational overhead of managing 20+ separate servers</td>
+                    </tr>
+                    <tr>
+                        <td>Vs. Streamlit Monolith</td>
+                        <td class="success">Modular Scaling</td>
+                        <td>Allows scaling the "AI Brain" independently of the "User Dashboard"</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="flow-diagram">
+                <div class="flow-step">User Interface (Next.js)</div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-step">API Gateway (Node.js)</div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-step">Business Logic</div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-step">AI Engine (Python)</div>
+                <span class="flow-arrow">&#8594;</span>
+                <div class="flow-step">Data Layer</div>
+            </div>
+        </section>
+
+        <!-- Section 4: Tech Stack -->
+        <section id="tech-stack">
+            <h2><span>4</span> Technology Stack Selection</h2>
+
+            <table>
+                <tr>
+                    <th>Component</th>
+                    <th>Selected</th>
+                    <th>Alternative</th>
+                    <th>Why We Chose It</th>
+                </tr>
+                <tr>
+                    <td><strong>Frontend</strong></td>
+                    <td class="success">Next.js (React)</td>
+                    <td>Streamlit / Vue.js</td>
+                    <td>SEO & Speed: Pages indexed by Google. Instant loads via SSR.</td>
+                </tr>
+                <tr>
+                    <td><strong>Backend</strong></td>
+                    <td class="success">Node.js (Express)</td>
+                    <td>Python (Django)</td>
+                    <td>Concurrency: Handles thousands of chat connections efficiently.</td>
+                </tr>
+                <tr>
+                    <td><strong>AI Engine</strong></td>
+                    <td class="success">Python (FastAPI)</td>
+                    <td>Node.js AI</td>
+                    <td>Power: PyTorch, Sentence-Transformers. Isolated from main site.</td>
+                </tr>
+                <tr>
+                    <td><strong>Vector DB</strong></td>
+                    <td class="success">Qdrant (Self-Hosted)</td>
+                    <td>Pinecone (Expensive)</td>
+                    <td>Cost & Logic: Free on VPS. Excels at Hybrid Search.</td>
+                </tr>
+                <tr>
+                    <td><strong>Embeddings</strong></td>
+                    <td class="success">Self-Hosted Models</td>
+                    <td>OpenAI API</td>
+                    <td>Privacy: Student docs processed on private server, never sent externally.</td>
+                </tr>
+            </table>
+
+            <div class="chart-container">
+                <h4>Cost Comparison: Self-Hosted vs Cloud</h4>
+                <div class="chart-wrapper">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Features -->
+        <section id="features">
+            <h2><span>5</span> Feature-by-Feature Transformation Plan</h2>
+            <p>How each module evolves from "Input-Output" to "Context-Aware" experience.</p>
+
+            <h3>5.1 UniAssist Chat (The Navigator)</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> A generic chatbot. Forgets context, treats every
+                    query as new.</p>
+                <p><strong class="success">Future State:</strong> A Context-Aware Orchestrator. "Knows" user's profile
+                    (Grade 9, Target: USA) implicitly.</p>
+                <h4>Conversation Flow:</h4>
+                <div class="flow-diagram">
+                    <div class="flow-step">User Query</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Context Builder</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Task Router</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Response Formatter</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">UI</div>
+                </div>
+            </div>
+
+            <h3>5.2 Diagnostic Tests (Assessment)</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> Static, long questionnaire with flat results.</p>
+                <p><strong class="success">Future State:</strong> Adaptive, gamified assessment with actionable career
+                    mapping.</p>
+                <h4>Result Breakdown Example:</h4>
+                <table>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Result</th>
+                        <th>Insight</th>
+                        <th>Recommended Path</th>
+                    </tr>
+                    <tr>
+                        <td>Cognitive</td>
+                        <td class="success">85th Percentile</td>
+                        <td>Strong Analytical Reasoning</td>
+                        <td>Data Science, Engineering</td>
+                    </tr>
+                    <tr>
+                        <td>Personality</td>
+                        <td>Investigative</td>
+                        <td>Prefers problem-solving</td>
+                        <td>Research, Analysis</td>
+                    </tr>
+                    <tr>
+                        <td>Focus Area</td>
+                        <td>Spatial</td>
+                        <td>High visual aptitude</td>
+                        <td>Architecture, UI/UX Design</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>5.3 Campus Quest (University Finder)</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> Slow, form-heavy search with no saved state.</p>
+                <p><strong class="success">Future State:</strong> Instant "Hybrid Search" with side-by-side comparison
+                    tools.</p>
+                <h4>University Comparison Matrix:</h4>
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Stanford University</th>
+                        <th>MIT</th>
+                        <th>UniAssist Verdict</th>
+                    </tr>
+                    <tr>
+                        <td>Match Score</td>
+                        <td class="success">92% (High)</td>
+                        <td>88% (Med)</td>
+                        <td>Stanford aligns better with "Entrepreneurship" focus</td>
+                    </tr>
+                    <tr>
+                        <td>Tuition</td>
+                        <td>$62,000</td>
+                        <td>$60,000</td>
+                        <td class="warning">Both exceed $50k budget (Scholarship required)</td>
+                    </tr>
+                    <tr>
+                        <td>Acceptance</td>
+                        <td>4%</td>
+                        <td>4%</td>
+                        <td>Reach Schools</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>5.4 Work & Settle (Job Market)</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> Static text based on outdated training data.</p>
+                <p><strong class="success">Future State:</strong> Real-time data aggregation. Fetches live job postings
+                    and visa rules.</p>
+                <h4>Global Opportunity Table:</h4>
+                <table>
+                    <tr>
+                        <th>Country</th>
+                        <th>Job Demand (AI)</th>
+                        <th>PR Difficulty</th>
+                        <th>Salary Range</th>
+                        <th>Risk</th>
+                    </tr>
+                    <tr>
+                        <td>Germany</td>
+                        <td class="success">Very High</td>
+                        <td class="success">Low (Blue Card)</td>
+                        <td>65k - 90k EUR</td>
+                        <td><span class="risk-indicator"><span class="risk-dot risk-low"></span> Low</span></td>
+                    </tr>
+                    <tr>
+                        <td>USA</td>
+                        <td class="success">High</td>
+                        <td class="warning">High (H1B Lottery)</td>
+                        <td>90k - 140k USD</td>
+                        <td><span class="risk-indicator"><span class="risk-dot risk-high"></span> High</span></td>
+                    </tr>
+                    <tr>
+                        <td>Canada</td>
+                        <td>Medium</td>
+                        <td>Medium (Express Entry)</td>
+                        <td>70k - 95k CAD</td>
+                        <td><span class="risk-indicator"><span class="risk-dot risk-medium"></span> Medium</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <h3>5.5 Visa Ready</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> Static checklists.</p>
+                <p><strong class="success">Future State:</strong> Interactive "Risk Assessment" and Voice-Native Mock
+                    Interviews.</p>
+                <h4>Risk Indicator Dashboard:</h4>
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div class="card" style="margin: 0;">
+                        <div class="risk-indicator"><span class="risk-dot risk-low"></span> <strong>Financial
+                                Risk:</strong> Low</div>
+                        <p style="font-size: 0.85rem; margin: 0;">Funds > 1.5x requirement</p>
+                    </div>
+                    <div class="card" style="margin: 0;">
+                        <div class="risk-indicator"><span class="risk-dot risk-medium"></span> <strong>Academic
+                                Risk:</strong> Medium</div>
+                        <p style="font-size: 0.85rem; margin: 0;">Study gap of 1 year</p>
+                    </div>
+                    <div class="card" style="margin: 0;">
+                        <div class="risk-indicator"><span class="risk-dot risk-low"></span> <strong>Intent
+                                Risk:</strong> Low</div>
+                        <p style="font-size: 0.85rem; margin: 0;">Strong ties to home country</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>5.6 Study Tools (Content Engine)</h3>
+            <div class="card">
+                <p><strong class="warning">Current State:</strong> Disconnected file uploaders.</p>
+                <p><strong class="success">Future State:</strong> Unified Knowledge Graph. Upload textbook chapter,
+                    auto-generates Quiz, Summary, and Mind Map.</p>
+                <h4>Content Pipeline:</h4>
+                <div class="flow-diagram">
+                    <div class="flow-step">Upload PDF</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Vision OCR</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Vector Store</div>
+                    <span class="flow-arrow">&#8594;</span>
+                    <div class="flow-step">Generate Quiz / Summary / Chat</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Conclusion -->
+        <section id="conclusion">
+            <h2><span>6</span> Strategic Conclusion</h2>
+            <p>This rebuild is not merely a cosmetic upgrade; it is a fundamental shift from a <span
+                    class="highlight">Prototype to a Platform</span>.</p>
+
+            <div class="card-grid">
+                <div class="stat-card">
+                    <div class="number" style="font-size: 1.8rem;">Reliability</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem;">By moving to Next.js and persistent databases, we
+                        eliminate the "lag" and "data loss" that kill user trust.</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number" style="font-size: 1.8rem;">Intelligence</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem;">By connecting features (Diagnostics to Profile to
+                        Universities), we deliver on the promise of a true "Co-Pilot."</p>
+                </div>
+                <div class="stat-card">
+                    <div class="number" style="font-size: 1.8rem;">Scalability</div>
+                    <p style="margin-top: 15px; font-size: 0.9rem;">The modular architecture allows us to support 100 or
+                        100,000 students without rewriting the core system.</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h4>Projected Growth Capability</h4>
+                <div class="chart-wrapper">
+                    <canvas id="scaleChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section id="comments">
+            <div class="comments-section">
+                <h3>Discussion & Comments</h3>
+                <p style="margin-bottom: 20px; color: #888;">Share feedback, ask questions, or suggest changes to this
+                    proposal.</p>
+
+                <div class="comment-input">
+                    <input type="text" id="comment-author" placeholder="Your Name">
+                    <input type="email" id="comment-email" placeholder="Your Email (optional)">
+                </div>
+                <div class="comment-input">
+                    <textarea id="comment-text" placeholder="Write your comment or question here..."></textarea>
+                    <button onclick="addComment()">Post Comment</button>
+                </div>
+
+                <div id="comments-list"></div>
+            </div>
+        </section>
+
+        <footer>
+            <p>UniAssist.ai Product Strategy Document</p>
+            <p style="margin-top: 5px;">Last Updated: <span id="last-updated"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Set dates
+        const today = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+        document.getElementById('current-date').textContent = 'Date: ' + today;
+        document.getElementById('last-updated').textContent = today;
+
+        // Performance Chart
+        new Chart(document.getElementById('performanceChart'), {
+            type: 'bar',
+            data: {
+                labels: ['Page Load', 'Auth Response', 'Chat Response', 'Form Save', 'Search'],
+                datasets: [{
+                    label: 'Current (Streamlit) - seconds',
+                    data: [4.5, 3.2, 2.8, 1.5, 3.0],
+                    backgroundColor: 'rgba(245, 87, 108, 0.7)',
+                    borderColor: '#f5576c',
+                    borderWidth: 1
+                }, {
+                    label: 'Proposed (Next.js) - seconds',
+                    data: [0.8, 0.5, 0.3, 0.2, 0.4],
+                    backgroundColor: 'rgba(56, 239, 125, 0.7)',
+                    borderColor: '#38ef7d',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#888' } } },
+                scales: {
+                    x: { ticks: { color: '#888' }, grid: { color: '#222' } },
+                    y: { ticks: { color: '#888' }, grid: { color: '#222' }, title: { display: true, text: 'Seconds', color: '#888' } }
+                }
+            }
+        });
+
+        // Dropoff Chart
+        new Chart(document.getElementById('dropoffChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Complete Forms', 'Abandon (Slow Load)', 'Abandon (Data Loss)', 'Abandon (Confusing UI)'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#38ef7d', '#f5576c', '#ffc107', '#667eea'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'right', labels: { color: '#888' } } }
+            }
+        });
+
+        // Cost Chart
+        new Chart(document.getElementById('costChart'), {
+            type: 'bar',
+            data: {
+                labels: ['10k docs/mo', '100k docs/mo', '1M docs/mo'],
+                datasets: [{
+                    label: 'Cloud API (INR)',
+                    data: [8000, 80000, 800000],
+                    backgroundColor: 'rgba(245, 87, 108, 0.7)',
+                    borderColor: '#f5576c',
+                    borderWidth: 1
+                }, {
+                    label: 'Self-Hosted (INR)',
+                    data: [4000, 4000, 5000],
+                    backgroundColor: 'rgba(56, 239, 125, 0.7)',
+                    borderColor: '#38ef7d',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#888' } } },
+                scales: {
+                    x: { ticks: { color: '#888' }, grid: { color: '#222' } },
+                    y: { ticks: { color: '#888' }, grid: { color: '#222' }, type: 'logarithmic' }
+                }
+            }
+        });
+
+        // Scale Chart
+        new Chart(document.getElementById('scaleChart'), {
+            type: 'line',
+            data: {
+                labels: ['100 Users', '1k Users', '10k Users', '50k Users', '100k Users'],
+                datasets: [{
+                    label: 'Current Architecture (Cost INR)',
+                    data: [25000, 80000, 250000, 500000, 1000000],
+                    borderColor: '#f5576c',
+                    backgroundColor: 'rgba(245, 87, 108, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Proposed Architecture (Cost INR)',
+                    data: [8000, 15000, 40000, 80000, 120000],
+                    borderColor: '#38ef7d',
+                    backgroundColor: 'rgba(56, 239, 125, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#888' } } },
+                scales: {
+                    x: { ticks: { color: '#888' }, grid: { color: '#222' } },
+                    y: { ticks: { color: '#888' }, grid: { color: '#222' } }
+                }
+            }
+        });
+
+        // Comments functionality
+        function loadComments() {
+            const comments = JSON.parse(localStorage.getItem('strategy_comments') || '[]');
+            const list = document.getElementById('comments-list');
+            list.innerHTML = comments.length === 0 ? '<p style="color: #666; text-align: center; padding: 20px;">No comments yet. Be the first to share your thoughts!</p>' : '';
+
+            comments.forEach((c, i) => {
+                list.innerHTML += `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">${c.author}</span>
+                            <span class="comment-date">${c.date} <button class="comment-delete" onclick="deleteComment(${i})">Delete</button></span>
+                        </div>
+                        <div class="comment-text">${c.text}</div>
+                    </div>
+                `;
+            });
+        }
+
+        function addComment() {
+            const author = document.getElementById('comment-author').value.trim() || 'Anonymous';
+            const text = document.getElementById('comment-text').value.trim();
+            if (!text) { alert('Please enter a comment'); return; }
+
+            const comments = JSON.parse(localStorage.getItem('strategy_comments') || '[]');
+            comments.unshift({
+                author: author,
+                text: text,
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('strategy_comments', JSON.stringify(comments));
+
+            document.getElementById('comment-text').value = '';
+            loadComments();
+        }
+
+        function deleteComment(index) {
+            if (!confirm('Delete this comment?')) return;
+            const comments = JSON.parse(localStorage.getItem('strategy_comments') || '[]');
+            comments.splice(index, 1);
+            localStorage.setItem('strategy_comments', JSON.stringify(comments));
+            loadComments();
+        }
+
+        loadComments();
+
+        // Sticky nav active state
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
